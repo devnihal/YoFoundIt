@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalabe=0">
+    <meta name="theme-color" content="#1e2f3b" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e2f3b">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <title>YoFoundIt</title>
+    <script src="./js/script.js" defer></script>
+</head>
+<body>
+    
+<svg width="0" height="0" style="position: absolute;">
+  <defs>
+    <clipPath id="myClip" clipPathUnits="objectBoundingBox">
+      <path id="uixbpath" d="M 0 0 L 1 0 L 1 0.7 A 0.7 0.3 0 0 1 0 0.7 Z" />
+    </clipPath>
+  </defs>
+</svg>
+
+
+<div id="loading-screen">
+     <div id="logoContainer"><svg width="378" height="150" version="1.1" id="mainlogo" viewBox="0 0 378.5 150.79" >
+    <path  id="logo-bubble" d="m34.497 108.77c-16.794 0-30.679-6.7989-30.679-25.114v-55.306c0-14.562 9.9642-24.527 24.527-24.527h321.8c14.562 0 24.527 9.9646 24.527 24.527v55.306c0 12.572-7.9986 24.529-24.527 24.529h-274.38l-40.681 38.785z" fill="none" stroke="#1e2f3b" stroke-linecap="round" stroke-linejoin="round" stroke-width="7.6348" style="paint-order:stroke markers fill"/>
+    <path id="logo-text" d="m121.73 35.235-14.037 27.064v14.454h-8.3272v-14.454l-14.096-27.064h9.3978l8.9219 18.974 8.8625-18.974zm9.0609 42.052c-3.1722 0-6.0272-0.69392-8.565-2.0818-2.5378-1.4275-4.5402-3.43-6.0075-6.0075-1.4275-2.5774-2.1413-5.5514-2.1413-8.9219s0.73359-6.3445 2.2007-8.9219c1.5068-2.5774 3.5489-4.5601 6.1264-5.9479 2.5774-1.4275 5.4523-2.1413 8.6245-2.1413s6.0471 0.71376 8.6245 2.1413c2.5774 1.3878 4.5997 3.3705 6.0669 5.9479 1.5068 2.5774 2.2602 5.5514 2.2602 8.9219s-0.77323 6.3445-2.3197 8.9219c-1.5068 2.5774-3.5688 4.58-6.1859 6.0075-2.5774 1.3878-5.4722 2.0818-8.684 2.0818zm0-7.2565c1.5068 0 2.9145-0.35688 4.2231-1.0706 1.3482-0.75341 2.4188-1.8637 3.2119-3.3309 0.79306-1.4672 1.1896-3.2516 1.1896-5.3532 0-3.1326-0.83271-5.5316-2.4981-7.197-1.6258-1.7051-3.6282-2.5576-6.0075-2.5576-2.3792 0-4.3817 0.85254-6.0075 2.5576-1.5861 1.6654-2.3791 4.0644-2.3791 7.197s0.77323 5.5514 2.3197 7.2565c1.5861 1.6654 3.5688 2.4981 5.9479 2.4981zm44.912-34.796v6.7212h-17.308v10.647h13.264v6.6022h-13.264v17.546h-8.3272v-41.516zm15.327 42.052c-3.1722 0-6.0272-0.69392-8.565-2.0818-2.5378-1.4275-4.5402-3.43-6.0075-6.0075-1.4275-2.5774-2.1413-5.5514-2.1413-8.9219s0.73359-6.3445 2.2007-8.9219c1.5068-2.5774 3.5489-4.5601 6.1264-5.9479 2.5774-1.4275 5.4523-2.1413 8.6245-2.1413s6.0471 0.71376 8.6245 2.1413c2.5774 1.3878 4.5997 3.3705 6.0669 5.9479 1.5068 2.5774 2.2602 5.5514 2.2602 8.9219s-0.77324 6.3445-2.3197 8.9219c-1.5068 2.5774-3.5688 4.58-6.1859 6.0075-2.5774 1.3878-5.4722 2.0818-8.684 2.0818zm0-7.2565c1.5068 0 2.9145-0.35688 4.2231-1.0706 1.3482-0.75341 2.4188-1.8637 3.2119-3.3309 0.79304-1.4672 1.1896-3.2516 1.1896-5.3532 0-3.1326-0.83271-5.5316-2.4981-7.197-1.6258-1.7051-3.6282-2.5576-6.0075-2.5576-2.3792 0-4.3817 0.85254-6.0075 2.5576-1.5861 1.6654-2.3791 4.0644-2.3791 7.197s0.77323 5.5514 2.3197 7.2565c1.5861 1.6654 3.5688 2.4981 5.9479 2.4981zm50.961-26.23v32.951h-8.3866v-4.1635c-1.0706 1.4275-2.4783 2.5576-4.2231 3.3903-1.7051 0.79306-3.5688 1.1896-5.591 1.1896-2.5774 0-4.8575-0.53532-6.8401-1.6059-1.9827-1.1103-3.5489-2.7163-4.6988-4.8178-1.1103-2.1413-1.6654-4.6791-1.6654-7.6134v-19.33h8.3272v18.142c0 2.6171 0.65426 4.6394 1.9628 6.0669 1.3085 1.3878 3.0929 2.0818 5.3532 2.0818 2.2998 0 4.1041-0.69392 5.4126-2.0818 1.3085-1.4275 1.9628-3.4498 1.9628-6.0669v-18.142zm22.428-0.47584c3.9256 0 7.0978 1.2491 9.5167 3.7472 2.4188 2.4584 3.6282 5.9083 3.6282 10.349v19.33h-8.3272v-18.201c0-2.6171-0.65427-4.6196-1.9628-6.0075-1.3085-1.4275-3.0929-2.1413-5.3532-2.1413-2.2998 0-4.1239 0.71375-5.472 2.1413-1.3085 1.3878-1.9628 3.3903-1.9628 6.0075v18.201h-8.3272v-32.951h8.3272v4.1041c1.1103-1.4275 2.518-2.5378 4.2231-3.3309 1.7447-0.83272 3.6481-1.2491 5.71-1.2491zm16.606 16.833c0-3.3309 0.65427-6.285 1.9628-8.8625 1.3482-2.5774 3.1722-4.5601 5.4722-5.9479 2.2998-1.3878 4.8576-2.0818 7.6729-2.0818 2.1413 0 4.1834 0.47584 6.1264 1.4275 1.943 0.91202 3.4895 2.1413 4.6394 3.6878v-15.643h8.446v44.015h-8.446v-4.8773c-1.031 1.6258-2.4783 2.9343-4.342 3.9256s-4.0248 1.487-6.4832 1.487c-2.7757 0-5.3135-0.71375-7.6134-2.1413-2.3-1.4275-4.1239-3.43-5.4722-6.0075-1.3085-2.6171-1.9628-5.6109-1.9628-8.9814zm25.934 0.11895c0-2.0223-0.39653-3.7472-1.1896-5.1747-0.79307-1.4672-1.8637-2.5774-3.2119-3.3309-1.3482-0.79306-2.7956-1.1896-4.342-1.1896-1.5465 0-2.974 0.37671-4.2825 1.1301-1.3085 0.7534-2.3791 1.8637-3.2119 3.3309-0.79307 1.4275-1.1896 3.1326-1.1896 5.1153s0.39653 3.7274 1.1896 5.2342c0.8327 1.4672 1.9033 2.5973 3.2119 3.3903 1.3482 0.79306 2.7757 1.1896 4.2825 1.1896 1.5465 0 2.9938-0.37671 4.342-1.1301 1.3482-0.79306 2.4188-1.9034 3.2119-3.3309 0.79306-1.4672 1.1896-3.2119 1.1896-5.2342zm20.823-25.041v41.516h-8.3272v-41.516zm14.441 15.405v15.941c0 1.1103 0.25774 1.9231 0.77323 2.4387 0.55514 0.47584 1.4672 0.71375 2.736 0.71375h3.8662v7.0185h-5.2342c-7.0185 0-10.528-3.4102-10.528-10.23v-15.881h-3.9256v-6.8401h3.9256v-8.1487h8.3866v8.1487h7.3754v6.8401z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#1e2f3b" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" stroke-width="1.0907"  aria-label="YoFoundIt"/>
+    <g id="logo-lens" fill="none" stroke="#1e2f3b">
+        <path id="logo-lens-circle" d="m44.978 41.278a19.703 19.703 0 0 0 0 27.865 19.703 19.703 0 0 0 27.865 0 19.703 19.703 0 0 0 0-27.865 19.703 19.703 0 0 0-27.865 0z" stroke-width="7.6349"/>
+        <path id="logo-lens-line" d="m44.98 69.07-18.644 19.203" stroke-linecap="round" stroke-width="7.6348"/>
+    </g></svg></div><h1 id="loading-text">Finding Lost Items...</h1>
+</div>
+
+
+<div id="content">
+    <div class="color-box-ui"></div>
+    <div class="hero">
+        <img src="./assets/logo.png" alt="YoFoundIt" class="logo">
+        <div class="prosec">
+            <button class="loginbtn">Login</button>
+        </div>
+    </div>
+    <div class="usergreet">
+        <h3 class="greet">Welcome to,</h3>
+        <h1 class="usernamearea">YoFoundIt</h1>
+    </div>
+    <div class="lfcontentcontainer" onscroll="blurtheonthis(this)">
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-green">FOUND</div>
+                    <h1 class="lfhead">Found a wallet</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, a qui? Molestiae nulla sunt reprehenderit exercitationem, est aut officia eveniet nobis sequi omnis id praesentium voluptates neque culpa! Deleniti, eos.</p>
+                </div>
+                <p class="posttime">2h ago</p>
+            </div>
+            <img src="./assets/images.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="lfcontainer">
+            <div class="lfcontent">
+                <div class="lfhero">
+                    <div class="lftag yfiui-red">LOST</div>
+                    <h1 class="lfhead">Lost a Car Key</h1>
+                </div>
+                <div class="lftext">
+                    <p class="lftextp">Lost a car key from the main office building</p>
+                </div>
+                <p class="posttime">5h ago</p>
+            </div>
+            <img src="./assets/download.jpg" alt="image" class="lfimage">
+        </div>
+        <div class="ghostobj"></div>
+    </div>
+
+    <div class="window-box window-hidden"  id="windowsearch">
+        <div class="window-titlebar">
+            <div class="window-back" onclick="window.history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" style="stroke-width: 1;stroke:var(--theme-color);" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                Search
+            </div>
+            <div class="search-input">
+                <input type="text" name="search" class="inputbox searchinput" placeholder="Type here....">
+                <button class="search-btn" onclick="console.log('hello')">Search</button>
+            </div>
+            <div class="search-result">
+            </div>
+        </div>
+    </div>
+    <div class="window-box window-hidden"  id="windowadd">
+        <div class="window-titlebar">
+            <div class="window-back" onclick="window.history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" style="stroke-width: 1;stroke:var(--theme-color);" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                Add
+            </div>
+        </div>
+        <div class="addspace">
+            <form action="" class="addform" onsubmit="event.preventDefault();" enctype="multipart/form-data">
+                    <input type="text"  class="uiinputbox" placeholder="Title" autocomplete="none">
+                    <select name="type" id="typeitem" class="uiinputbox">
+                        <option value="" selected disabled>--SELECT TYPE--</option>
+                        <option value="lost" style="background-color: var(--yfiui-red);">LOST</option>
+                        <option value="found" style="background-color: var(--yfiui-green);">FOUND</option>
+                    </select>
+                    <input type="text"  class="uiinputbox" placeholder="Location" autocomplete="none">
+                    <textarea name="descrption" id="descrption" placeholder="Descrption..." class="uiinputbox" rows="10" ></textarea>
+                    <input type="file" name="image" id="imageupload" style="display: none;"   accept="image/*">
+                    <label for="imageupload" class="imageuploadlabel">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--theme-color)" viewBox="0 0 16 16">
+                            <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z"/>
+                        </svg>
+                        <span>Attach Image</span>
+                    </label>
+                    <span style="display: inline-block;width: 100%;text-align: center; font-size: 20px;">OR</span>
+                    <input type="file" name="image" id="imagecapture" style="display: none;" capture="environment" accept="image/*">
+                    <label for="imagecapture" class="imageuploadlabel">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--theme-color)" viewBox="0 0 16 16">
+                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+                            </svg>
+                        <span>Take Photo</span>
+                    </label>
+                <button type="submit" class="sbmtbtn">POST</button>
+            </form>
+        </div>
+    </div>
+    <div class="window-box window-hidden"  id="windowaccount">
+        <div class="window-titlebar">
+            <div class="window-back" onclick="window.history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" style="stroke-width: 1;stroke:var(--theme-color);" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                Account
+            </div>
+        </div>
+        <div class="accformarea">
+            <form class="signupform" onsubmit="event.preventDefault();"  tabindex="1">
+                <h1 class="accformtitle">Login</h1>
+                <div class="collapedfield">
+                    <input type="text" name="name" autocomplete="name" class="uiinputbox" placeholder="Full Name">
+                </div> 
+                <input type="email" class="uiinputbox" autocomplete="email" name="email" placeholder="Email">
+                <div class="collapedfield">
+                    <div style="display: flex; align-items: center;">
+                        <input type="tel" name="country_code" class="uiinputbox" autocomplete="tel-country-code" value="+91" placeholder="+91" style="width: 70px; margin-right: 5px;" required>
+                        <input type="tel" name="whatsapp_number" class="uiinputbox" autocomplete="tel-national" placeholder="Whatsapp Number">
+                    </div>
+                </div>
+                <input type="password" class="uiinputbox"  name="password" placeholder="Password">
+                <div class="collapedfield">
+                    <input type="password" name="name" class="uiinputbox" placeholder="Confirm Password">
+                </div>
+                <button class="accbtn">Login</button>
+                <span class="accbtmtxt">Don't have an account?
+                    <a class="uiurl" href="javascript:void(0);" onclick="signupform()">Sign Up</a>
+                </span>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="navigation-bar">
+    <div class="nav-active-box"></div>
+    <button class="nav-button" data-target="home">
+        <svg xmlns="http://www.w3.org/2000/svg" class="nav-menu-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    </button>
+    <button class="nav-button" data-target="search">
+        <svg xmlns="http://www.w3.org/2000/svg" class="nav-menu-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </button>
+    <button class="nav-button" data-target="add">
+        <svg xmlns="http://www.w3.org/2000/svg" class="nav-menu-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </button>
+    <button class="nav-button" data-target="profile">
+        <svg xmlns="http://www.w3.org/2000/svg" class="nav-menu-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </button>
+    <button class="nav-button" data-target="settings" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" class="nav-menu-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    </button>
+</div>
+
+</body>
+</html>
