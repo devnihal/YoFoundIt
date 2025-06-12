@@ -675,7 +675,7 @@ button:disabled{
 .addspace{
     flex: 1;
     overflow-y: scroll;
-    max-height: calc(100svh - 65px);
+    max-height: calc(100svh-);
 
 &::-webkit-scrollbar {
  width: 8px;
