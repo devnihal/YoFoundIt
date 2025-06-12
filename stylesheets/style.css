@@ -557,7 +557,7 @@ body{
     transition: 0.25s cubic-bezier(0.22, 0.98, 0.76, 1.14);
 }
 .window-box{
-    height: 100svh;
+    height: 100lvh;
     width: 100vw;
     max-width: 680px;
     background-color: var(--theme-accent);
