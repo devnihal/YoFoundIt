@@ -405,7 +405,7 @@ body{
     top: 0;
     left: calc(50vw - 325px);
     padding-top: 25%;
-    padding-bottom: calc(50px + env(safe-area-inset-bottom);
+    padding-bottom: calc(50px + env(safe-area-inset-bottom));
     z-index: 2;
     overflow-y: hidden;
     overflow-x: hidden;
