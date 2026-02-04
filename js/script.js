@@ -5,372 +5,410 @@
 //         <path id="logo-lens-circle" d="m44.978 41.278a19.703 19.703 0 0 0 0 27.865 19.703 19.703 0 0 0 27.865 0 19.703 19.703 0 0 0 0-27.865 19.703 19.703 0 0 0-27.865 0z" stroke-width="7.6349"/>
 //         <path id="logo-lens-line" d="m44.98 69.07-18.644 19.203" stroke-linecap="round" stroke-width="7.6348"/>
 //     </g></svg></div><h1 id="loading-text">Finding Lost Items...</h1>`;
-    let Pageloaded = false;
+let Pageloaded = false;
 
-    function animate(){
-        // document.querySelector("#loading-screen").innerHTML=loader;
+function animate() {
+  document
+    .querySelector('meta[name="theme-color"]')
+    .setAttribute("content", "#f7f2e9");
 
-        let t = 1;
-        setTimeout(() => {
-            document.querySelector("#logo-lens").style.transform="translateX(250px)rotateZ(-90deg)";
-            const intervlanim = setInterval(()=>{
-                if(Pageloaded){
-                    if(t==0){
-                        clearInterval(intervlanim);
-                        document.querySelector("#logo-lens").style.transform="translateX(250px)rotateZ(-90deg)";
-                        setTimeout(() => {
-                            document.querySelector("#logo-lens").style.transform="translateX(0px)rotateZ(0deg)";
-                            document.querySelector("#loading-text").style.opacity="0";
-                            document.querySelector("#mainlogo").classList.add("show");
-                            removeLoadScreen();
-                        }, 1500);
-                    }
-                    else{
-                        clearInterval(intervlanim);
-                        document.querySelector("#logo-lens").style.transform="translateX(0px)rotateZ(0deg)";
-                        setTimeout(() => {
-                            document.querySelector("#logo-lens").style.transform="translateX(250px)rotateZ(-90deg)";
-                            setTimeout(() => {
-                                document.querySelector("#loading-text").style.opacity="0";
-                                document.querySelector("#mainlogo").classList.add("show");
-                                document.querySelector("#logo-lens").style.transform="translateX(0px)rotateZ(0deg)";
-                                removeLoadScreen();
-                            }, 1500);
-                        }, 1500);
-                    }
-                }
-                if(t==1){
-                    document.querySelector("#logo-lens").style.transform="translateX(0px)rotateZ(0deg)";
-                    t=0;
-                }
-                else{
-                    t=1;
-                    document.querySelector("#logo-lens").style.transform="translateX(250px)rotateZ(-90deg)";
-                }
-            },1500)
-        }, 500);
-    }
+  let t = 1;
+  setTimeout(() => {
+    document.querySelector("#logo-lens").style.transform =
+      "translateX(250px)rotateZ(-90deg)";
+    const intervlanim = setInterval(() => {
+      if (Pageloaded) {
+        if (t == 0) {
+          clearInterval(intervlanim);
+          document.querySelector("#logo-lens").style.transform =
+            "translateX(250px)rotateZ(-90deg)";
+          setTimeout(() => {
+            document.querySelector("#logo-lens").style.transform =
+              "translateX(0px)rotateZ(0deg)";
+            document.querySelector("#loading-text").style.opacity = "0";
+            document.querySelector("#mainlogo").classList.add("show");
+            removeLoadScreen();
+          }, 1500);
+        } else {
+          clearInterval(intervlanim);
+          document.querySelector("#logo-lens").style.transform =
+            "translateX(0px)rotateZ(0deg)";
+          setTimeout(() => {
+            document.querySelector("#logo-lens").style.transform =
+              "translateX(250px)rotateZ(-90deg)";
+            setTimeout(() => {
+              document.querySelector("#loading-text").style.opacity = "0";
+              document.querySelector("#mainlogo").classList.add("show");
+              document.querySelector("#logo-lens").style.transform =
+                "translateX(0px)rotateZ(0deg)";
+              removeLoadScreen();
+            }, 1500);
+          }, 1500);
+        }
+      }
+      if (t == 1) {
+        document.querySelector("#logo-lens").style.transform =
+          "translateX(0px)rotateZ(0deg)";
+        t = 0;
+      } else {
+        t = 1;
+        document.querySelector("#logo-lens").style.transform =
+          "translateX(250px)rotateZ(-90deg)";
+      }
+    }, 1500);
+  }, 500);
+}
 animate();
 
-function removeLoadScreen(){
+function removeLoadScreen() {
+  setTimeout(() => {
+    let loadscreen = document.getElementById("loading-screen");
+    loadscreen.style.transition = "0.5s ease-in";
+    loadscreen.style.opacity = "0";
+    document
+      .querySelector('meta[name="theme-color"]')
+      .setAttribute("content", "#1e2f3b");
     setTimeout(() => {
-            let loadscreen=document.getElementById("loading-screen");
-            loadscreen.style.transition="0.5s ease-in";
-            loadscreen.style.opacity="0";
-            setTimeout(() => {
-                loadscreen.remove();
-                startUI();
-            }, 500);
-    }, 2000);
-}
-document.addEventListener("DOMContentLoaded",()=>{
-    sessionStorage.setItem("pagepath",JSON.stringify(["home"]));
-    setTimeout(() => {
-        Pageloaded=true;
+      loadscreen.remove();
+      startUI();
     }, 500);
-})
+  }, 2000);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  sessionStorage.setItem("pagepath", JSON.stringify(["home"]));
+  setTimeout(() => {
+    Pageloaded = true;
+  }, 500);
+});
 
+function blurtheonthis(element) {
+  let scrollTop = element.scrollTop;
+  let greeter = document.querySelector(".usergreet");
+  let hero = document.querySelector(".hero");
+  const maxScrollForEffect = 400;
+  const maxBlurPx = 5;
 
+  let normalizedScroll = Math.min(scrollTop / maxScrollForEffect, 1);
 
-function blurtheonthis(element){
-    let scrollTop = element.scrollTop;
-    let greeter = document.querySelector(".usergreet");
-    let hero = document.querySelector(".hero");
-    const maxScrollForEffect = 400;
-    const maxBlurPx = 5;
+  // iOS-like easing function (smoother than easeOutQuad)
+  function iosEaseOut(t) {
+    // cubic-bezier(0.25, 0.1, 0.25, 1) approximation
+    return t === 0
+      ? 0
+      : t === 1
+      ? 1
+      : t < 0.5
+      ? 2 * t * t
+      : -1 + 4 * t - 2 * t * t;
+  }
 
-    let normalizedScroll = Math.min(scrollTop / maxScrollForEffect, 1);
+  let easedBlurValue = iosEaseOut(normalizedScroll);
+  let blurAmount = easedBlurValue * maxBlurPx;
 
+  element.style.backdropFilter = `blur(${blurAmount}px) brightness(${
+    100 - easedBlurValue * 50
+  }%)`;
+  greeter.style.transform = `scale(${1 - easedBlurValue * 0.1})translateY(${
+    easedBlurValue * 50
+  }px) translateZ(0)`;
+  hero.style.transform = `scale(${1 - easedBlurValue * 0.1})translateY(${
+    easedBlurValue * 50
+  }px) translateZ(0)`;
 
-    function easeOutQuad(t) {
-        return t * (2 - t);
+  let boxes = document.querySelectorAll(".lfcontainer");
+  boxes.forEach((box) => {
+    const boxTop = box.getBoundingClientRect().top;
+    if (boxTop > window.innerHeight - 200) {
+      box.style.transform = `scale(${
+        1 - (boxTop - (window.innerHeight - 200)) / 400
+      }) translateZ(0)`;
+      box.style.transformOrigin = "top center";
+    } else if (boxTop < 0) {
+      box.style.transform = `scale(${
+        Math.abs(Math.max(100 + boxTop, 0)) / 200 + 0.5
+      }) translateZ(0)`;
+      box.style.transformOrigin = "bottom center";
+    } else {
+      box.style.transform = `scale(1) translateZ(0)`;
     }
+  });
 
-
-    let easedBlurValue = easeOutQuad(normalizedScroll);
-    let blurAmount = easedBlurValue * maxBlurPx;
-
-    element.style.backdropFilter = `blur(${blurAmount}px) brightness(${100 - easedBlurValue * 50}%)`;
-    greeter.style.transform = `scale(${1 - easedBlurValue * 0.1})translateY(${easedBlurValue * 50}px)`;
-    hero.style.transform = `scale(${1 - easedBlurValue * 0.1})translateY(${easedBlurValue * 50}px)`;
-
-    let boxes = document.querySelectorAll(".lfcontainer");
-    boxes.forEach(box => {
-        const boxTop = box.getBoundingClientRect().top;
-        if (boxTop > window.innerHeight - 200) {
-            box.style.transform = `scale(${1 - (boxTop - (window.innerHeight - 200)) / 400})`;
-            box.style.transformOrigin="top center";
-        } else if (boxTop < 0) {
-            box.style.transform = `scale(${((Math.abs(Math.max(100 + boxTop , 0)) / 200)) + 0.5})`;
-            box.style.transformOrigin="bottom center";
-        } else {
-            box.style.transform = `scale(1)`;
-        }
-    });
-
-    let uibx = document.querySelector(".color-box-ui");
-    uibx.style.transform = `translateY(${((Math.min(scrollTop,200)/200)*10) - 10}%)`;
+  let uibx = document.querySelector(".color-box-ui");
+  uibx.style.transform = `translateY(${
+    (Math.min(scrollTop, 200) / 200) * 10 - 10
+  }%) translateZ(0)`;
 }
 
-function startUI(){
-    let mainContainer = document.querySelector(".lfcontentcontainer");
-    mainContainer.style.overflowY = "scroll";
-    // const addBtn = document.querySelector('.addbtn');
+function startUI() {
+  let mainContainer = document.querySelector(".lfcontentcontainer");
+  mainContainer.style.overflowY = "scroll";
+  // const addBtn = document.querySelector('.addbtn');
 
-    // addBtn.addEventListener('click', function(event) {
-    // rippleEffect(this, event);
-    // });
+  // addBtn.addEventListener('click', function(event) {
+  // rippleEffect(this, event);
+  // });
 
-    // addBtn.addEventListener('touchstart', function(event) {
-    // event.preventDefault();
-    // rippleEffect(this, event);
-    // });
+  // addBtn.addEventListener('touchstart', function(event) {
+  // event.preventDefault();
+  // rippleEffect(this, event);
+  // });
 
-    const boxes = document.querySelectorAll(".lfcontainer");
-    boxes.forEach(box => {
-        box.addEventListener("click", function(event) {
-            rippleEffect(this, event);
-        });
+  const boxes = document.querySelectorAll(".lfcontainer");
+  boxes.forEach((box) => {
+    box.addEventListener("click", function (event) {
+      rippleEffect(this, event);
     });
-    const nvbtns = document.querySelectorAll(".nav-button");
-    nvbtns.forEach(btn => {
-        btn.addEventListener("click",function(event){
-            // //console.log(box);
-            rippleEffect(this,event);
-        });
+  });
+  const nvbtns = document.querySelectorAll(".nav-button");
+  nvbtns.forEach((btn) => {
+    btn.addEventListener("click", function (event) {
+      // //console.log(box);
+      rippleEffect(this, event);
     });
+  });
 }
-
 
 function rippleEffect(el, event) {
-    const ripple = document.createElement("span");
-    ripple.classList.add("ripple");
-    el.appendChild(ripple);
+  const ripple = document.createElement("span");
+  ripple.classList.add("ripple");
+  el.appendChild(ripple);
 
-    const elWidth = el.offsetWidth;
-    const elHeight = el.offsetHeight;
-    const size = Math.max(elWidth, elHeight);
-    let clientbndrrct = el.getBoundingClientRect();
-    let x, y;
-    if (event.type === 'touchstart' || event.type === 'touchmove') {
-        x = event.touches[0].clientX - clientbndrrct.left;
-        y = event.touches[0].clientY - clientbndrrct.top;
-    } else {
-        x = event.clientX - clientbndrrct.left;
-        y = event.clientY - clientbndrrct.top;
-    }
+  const elWidth = el.offsetWidth;
+  const elHeight = el.offsetHeight;
+  const size = Math.max(elWidth, elHeight);
+  let clientbndrrct = el.getBoundingClientRect();
+  let x, y;
+  if (event.type === "touchstart" || event.type === "touchmove") {
+    x = event.touches[0].clientX - clientbndrrct.left;
+    y = event.touches[0].clientY - clientbndrrct.top;
+  } else {
+    x = event.clientX - clientbndrrct.left;
+    y = event.clientY - clientbndrrct.top;
+  }
 
-    ripple.style.width = `${size}px`;
-    ripple.style.height = `${size}px`;
-    ripple.style.left = `${x - size / 2}px`;
-    ripple.style.top = `${y - size / 2}px`;
+  ripple.style.width = `${size}px`;
+  ripple.style.height = `${size}px`;
+  ripple.style.left = `${x - size / 2}px`;
+  ripple.style.top = `${y - size / 2}px`;
 
-    requestAnimationFrame(() => {
-        ripple.style.transform = `scale(1.5)`;
-        ripple.style.opacity = `0`;
-    });
+  requestAnimationFrame(() => {
+    ripple.style.transform = `scale(1.5)`;
+    ripple.style.opacity = `0`;
+  });
 
-    ripple.addEventListener('transitionend', function handler() {
-        ripple.remove();
-        ripple.removeEventListener('transitionend', handler);
-    });
+  ripple.addEventListener("transitionend", function handler() {
+    ripple.remove();
+    ripple.removeEventListener("transitionend", handler);
+  });
 }
 
 let navstate = true;
 
-function hidenav(){
-    const nvbar = document.querySelector(".navigation-bar");
-    nvbar.style.transform="translateX(-50%)translateY(150%)scale(1)";
-    navstate=false;
+function hidenav() {
+  const nvbar = document.querySelector(".navigation-bar");
+  nvbar.style.transform =
+    "translateX(-50%)translateY(150%)scale(1) translateZ(0)";
+  navstate = false;
 }
-function shownav(){
-    const nvbar = document.querySelector(".navigation-bar");
-    nvbar.style.transform="translateX(-50%)translateY(0%)scale(1)";
-    navstate=true;
+function shownav() {
+  const nvbar = document.querySelector(".navigation-bar");
+  nvbar.style.transform =
+    "translateX(-50%)translateY(0%)scale(1) translateZ(0)";
+  navstate = true;
 }
 
 window.onclick = (event) => {
-    const navButton = event.target.closest(".nav-button");
-    if (navButton) {
-        const targetValue = navButton.dataset.target;
-        //console.log("Button clicked with data-target:", targetValue);
-        redirectTo(targetValue);
-    } else {
-        //console.log("Clicked outside .nav-button");
-    }
+  const navButton = event.target.closest(".nav-button");
+  if (navButton) {
+    const targetValue = navButton.dataset.target;
+    //console.log("Button clicked with data-target:", targetValue);
+    redirectTo(targetValue);
+  } else {
+    //console.log("Clicked outside .nav-button");
+  }
 };
 const nav_bg_box_pos = {
-    home:0,
-    search:20,
-    add:40,
-    profile:60,
-    settings:80
+  home: 0,
+  search: 20,
+  add: 40,
+  profile: 60,
+  settings: 80,
 };
 const window_names = {
-    home:"",
-    search:"windowsearch",
-    add:"windowadd",
-    profile:"windowaccount",
-    settings:80
+  home: "",
+  search: "windowsearch",
+  add: "windowadd",
+  profile: "windowaccount",
+  settings: 80,
+};
+
+function redirectTo(destination) {
+  document.body.classList.add("lockscroll");
+  // //console.log(JSON.parse(sessionStorage.getItem("pagepath")));
+  let path = JSON.parse(sessionStorage.getItem("pagepath"));
+  path.push(destination);
+  sessionStorage.setItem("pagepath", JSON.stringify(path));
+  // //console.log(path);
+  document.querySelector(".nav-active-box").style.left =
+    nav_bg_box_pos[destination] + "%";
+  // //console.log(nav_bg_box_pos[destination]);
+  let windowEl = document.getElementById(window_names[destination]);
+  windowEl.style.willChange = "left";
+  windowEl.classList.remove("window-hidden");
+  history.pushState({ window: window_names[destination] }, "", "");
+  // alert(history)
+  hidenav();
 }
-
-function redirectTo(destination){  
-    document.body.classList.add("lockscroll");
-    // //console.log(JSON.parse(sessionStorage.getItem("pagepath")));
-    let path = JSON.parse(sessionStorage.getItem("pagepath"));
-    path.push(destination);
-    sessionStorage.setItem("pagepath",JSON.stringify(path));
-    // //console.log(path);
-    document.querySelector(".nav-active-box").style.left=nav_bg_box_pos[destination] + "%";
-    // //console.log(nav_bg_box_pos[destination]);
-    document.getElementById(window_names[destination]).classList.remove("window-hidden");
-    history.pushState({ window: window_names[destination] }, "", "");
-    // alert(history)
-    hidenav();
-}
-window.onpopstate = function(event) {
-    document.body.classList.remove("lockscroll");
-    // const windowId = event.state?.window || "homeWindow";
-    let path = JSON.parse(sessionStorage.getItem("pagepath"));
-    if(path[path.length - 1] == "search"){
-        path.pop();
-        sessionStorage.setItem("pagepath",JSON.stringify(path));
-        document.querySelector(".searchinput").value="";
-        history.replaceState(null, '', location.href);
-        closewindow("search");
+window.onpopstate = function (event) {
+  document.body.classList.remove("lockscroll");
+  // const windowId = event.state?.window || "homeWindow";
+  let path = JSON.parse(sessionStorage.getItem("pagepath"));
+  if (path[path.length - 1] == "search") {
+    path.pop();
+    sessionStorage.setItem("pagepath", JSON.stringify(path));
+    document.querySelector(".searchinput").value = "";
+    history.replaceState(null, "", location.href);
+    closewindow("search");
+  } else if (path[path.length - 1] == "add") {
+    path.pop();
+    sessionStorage.setItem("pagepath", JSON.stringify(path));
+    history.replaceState(null, "", location.href);
+    closewindow("add");
+    setTimeout(() => {
+      document.querySelector(".addform").reset();
+    }, 250);
+  } else if (path[path.length - 1] == "profile") {
+    path.pop();
+    sessionStorage.setItem("pagepath", JSON.stringify(path));
+    history.replaceState(null, "", location.href);
+    if (formtype == "signup") {
+      signinform();
     }
-    else if(path[path.length - 1] == "add"){
-        path.pop();
-        sessionStorage.setItem("pagepath",JSON.stringify(path));
-        history.replaceState(null, '', location.href);
-        closewindow("add");
-        setTimeout(() => {
-            document.querySelector(".addform").reset();
-        }, 250);
-    }
-    else if(path[path.length - 1] == "profile"){
-        path.pop();
-        sessionStorage.setItem("pagepath",JSON.stringify(path));
-        history.replaceState(null, '', location.href);
-        if(formtype=="signup"){
-            signinform();
-        }
-        closewindow("profile");
-    }
-    if (path[path.length - 1] === "home") {
-        document.querySelector(".nav-active-box").style.left = "0%";
+    closewindow("profile");
+  }
+  if (path[path.length - 1] === "home") {
+    document.querySelector(".nav-active-box").style.left = "0%";
 
-        // 1. Replace current state with 'home'
-        history.replaceState({ window: "" }, "home", location.href);
+    // 1. Replace current state with 'home'
+    history.replaceState({ window: "" }, "home", location.href);
 
-        // 2. Push a dummy state to wipe forward history
-        setTimeout(() => {
-            history.pushState({ window: "cleared" }, "", "");
-        }, 0);
-    }
-
+    // 2. Push a dummy state to wipe forward history
+    setTimeout(() => {
+      history.pushState({ window: "cleared" }, "", "");
+    }, 0);
+  }
 };
 let formtype = "login";
-function closewindow(windowname){
-    document.getElementById(window_names[windowname]).classList.add("window-hidden");
-    shownav();
+function closewindow(windowname) {
+  document
+    .getElementById(window_names[windowname])
+    .classList.add("window-hidden");
+  shownav();
 }
 
 // window.onbeforeunload = (event)=>{
 //     event.preventDefault();
 //     return false;
 // }
-document.addEventListener('keydown', function(event) {
-    if (event.keyCode === 9 || event.key === 'Tab') {
-        event.preventDefault();
-        event.stopPropagation();
-    }
+document.addEventListener("keydown", function (event) {
+  if (event.keyCode === 9 || event.key === "Tab") {
+    event.preventDefault();
+    event.stopPropagation();
+  }
 });
-function signupform(){
-    formtype="signup";
-    let expans = document.querySelectorAll(".collapedfield");
-    expans.forEach(items =>{
-        items.classList.add("visible")
-    });
-    let title = document.querySelector(".accformtitle");
-    title.style.backgroundPosition="0% 0%";
+function signupform() {
+  formtype = "signup";
+  let expans = document.querySelectorAll(".collapedfield");
+  expans.forEach((items) => {
+    items.classList.add("visible");
+    items.style.pointerEvents = "all";
+  });
+  let title = document.querySelector(".accformtitle");
+  title.style.willChange = "background-position";
+  title.style.backgroundPosition = "0% 0%";
+  setTimeout(() => {
+    title.innerHTML = `Sign Up`;
+    title.style.backgroundPosition = "0% -100%";
+    // console.log("hi");
     setTimeout(() => {
-        title.innerHTML=`Sign Up`;
-        title.style.backgroundPosition="0% -100%";
-        // console.log("hi");
-        setTimeout(() => {
-            title.style.transition="none";
-            title.style.backgroundPosition="0% 100%";
-            setTimeout(() => {
-                title.style.transition="0.25s cubic-bezier(1, 0.04, 0.35, 0.96)";
-            }, 100);
-        }, 250);
+      title.style.transition = "none";
+      title.style.backgroundPosition = "0% 100%";
+      setTimeout(() => {
+        title.style.transition = "0.25s cubic-bezier(0.25, 0.1, 0.25, 1)";
+      }, 100);
     }, 250);
-    
-    let btn = document.querySelector(".accbtn");
-    btn.style.color="transparent";
-    setTimeout(() => {
-        btn.textContent="Sign Up";
-        btn.style.color="var(--theme-accent)";
-    }, 250);    
-    let bttxt = document.querySelector(".accbtmtxt");
-    bttxt.style.backgroundPosition="0%";
-    setTimeout(() => {
-        bttxt.innerHTML=`<span class="accbtmtxt">Already have an account?
+  }, 250);
+
+  let btn = document.querySelector(".accbtn");
+  btn.style.willChange = "color";
+  btn.style.color = "transparent";
+  setTimeout(() => {
+    btn.textContent = "Sign Up";
+    btn.style.color = "var(--theme-accent)";
+  }, 250);
+  let bttxt = document.querySelector(".accbtmtxt");
+  bttxt.style.willChange = "background-position";
+  bttxt.style.backgroundPosition = "0%";
+  setTimeout(() => {
+    bttxt.innerHTML = `<span class="accbtmtxt">Already have an account?
         <a class="uiurl" href="javascript:void(0);" onclick="signinform()">login</a>
         </span>`;
-        bttxt.style.backgroundPosition="-100%";
-        // console.log("hi");
-        setTimeout(() => {
-            bttxt.style.transition="none";
-            bttxt.style.backgroundPosition="100%";
-            setTimeout(() => {
-                bttxt.style.transition="0.25s cubic-bezier(1, 0.04, 0.35, 0.96)";
-            }, 100);
-        }, 250);
+    bttxt.style.backgroundPosition = "-100%";
+    // console.log("hi");
+    setTimeout(() => {
+      bttxt.style.transition = "none";
+      bttxt.style.backgroundPosition = "100%";
+      setTimeout(() => {
+        bttxt.style.transition = "0.25s cubic-bezier(0.25, 0.1, 0.25, 1)";
+      }, 100);
     }, 250);
+  }, 250);
 }
-function signinform(){
-    formtype="login";
-    let expans = document.querySelectorAll(".collapedfield");
-    expans.forEach(items =>{
-        items.classList.remove("visible")
-    });
-    let title = document.querySelector(".accformtitle");
-    title.style.backgroundPosition="0% 0%";
+function signinform() {
+  formtype = "login";
+  let expans = document.querySelectorAll(".collapedfield");
+  expans.forEach((items) => {
+    items.classList.remove("visible");
+    items.style.pointerEvents = "none";
+  });
+  let title = document.querySelector(".accformtitle");
+  title.style.willChange = "background-position";
+  title.style.backgroundPosition = "0% 0%";
+  setTimeout(() => {
+    title.innerHTML = `Login`;
+    title.style.backgroundPosition = "0% -100%";
+    // console.log("hi");
     setTimeout(() => {
-        title.innerHTML=`Login`;
-        title.style.backgroundPosition="0% -100%";
-        // console.log("hi");
-        setTimeout(() => {
-            title.style.transition="none";
-            title.style.backgroundPosition="0% 100%";
-            setTimeout(() => {
-                title.style.transition="0.25s cubic-bezier(1, 0.04, 0.35, 0.96)";
-            }, 100);
-        }, 250);
+      title.style.transition = "none";
+      title.style.backgroundPosition = "0% 100%";
+      setTimeout(() => {
+        title.style.transition = "0.25s cubic-bezier(0.25, 0.1, 0.25, 1)";
+      }, 100);
     }, 250);
+  }, 250);
 
-    let btn = document.querySelector(".accbtn");
-    btn.style.color="transparent";
-    setTimeout(() => {
-        btn.textContent="Login";
-        btn.style.color="var(--theme-accent)";
-    }, 250);
-    let bttxt = document.querySelector(".accbtmtxt");
-    bttxt.style.backgroundPosition="0%";
-    setTimeout(() => {
-        bttxt.innerHTML=`<span class="accbtmtxt">&nbsp;Don't have an account?
+  let btn = document.querySelector(".accbtn");
+  btn.style.willChange = "color";
+  btn.style.color = "transparent";
+  setTimeout(() => {
+    btn.textContent = "Login";
+    btn.style.color = "var(--theme-accent)";
+  }, 250);
+  let bttxt = document.querySelector(".accbtmtxt");
+  bttxt.style.willChange = "background-position";
+  bttxt.style.backgroundPosition = "0%";
+  setTimeout(() => {
+    bttxt.innerHTML = `<span class="accbtmtxt">&nbsp;Don't have an account?
             <a class="uiurl" href="javascript:void(0);" onclick="signupform()">Sign Up</a>
         </span>`;
-        bttxt.style.backgroundPosition="-100%";
-        // console.log("hi");
-        setTimeout(() => {
-            bttxt.style.transition="none";
-            bttxt.style.backgroundPosition="100%";
-            setTimeout(() => {
-                bttxt.style.transition="0.25s cubic-bezier(1, 0.04, 0.35, 0.96)";
-            }, 100);
-        }, 250);
+    bttxt.style.backgroundPosition = "-100%";
+    // console.log("hi");
+    setTimeout(() => {
+      bttxt.style.transition = "none";
+      bttxt.style.backgroundPosition = "100%";
+      setTimeout(() => {
+        bttxt.style.transition = "0.25s cubic-bezier(0.25, 0.1, 0.25, 1)";
+      }, 100);
     }, 250);
+  }, 250);
 }
