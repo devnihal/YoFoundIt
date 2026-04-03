@@ -847,7 +847,7 @@ async function loadMyItems() {
   }
 }
 
-async function promptDeleteItem(event, itemId, itemTitle) {
+async function promptDeleteItem(event, itemId, itemTitle, onSuccessCallback) {
   // Prevent the click from bubbling up and opening the Item Details window
   event.stopPropagation();
 
@@ -870,6 +870,9 @@ async function promptDeleteItem(event, itemId, itemTitle) {
         // Refresh the user's item list and the home feed
         await loadMyItems();
         await loadHomeFeed();
+        if (typeof onSuccessCallback === 'function') {
+          onSuccessCallback();
+        }
       } else {
         toastUI.show(res.data.message || "Failed to delete item", "error");
       }
@@ -976,9 +979,12 @@ function showLoginAlert() {
   showAlertModal(
     passwordSVG,
     "Authentication Required",
-    "You need to log in to post items.",
+    "You need to log in to claim items.",
     "Login Now",
-    () => setTimeout(() => redirectTo("profile"), 250)
+    () => {
+      closewindow("itemdetails");
+      setTimeout(() => redirectTo("profile"), 300);
+    }
   );
 }
 
@@ -1298,6 +1304,15 @@ function closeItemDetails() {
   }
 }
 
+function handleClaimClick() {
+  const isLoggedIn = localStorage.getItem("yfi_token");
+  if (!isLoggedIn) {
+    showLoginAlert();
+    return;
+  }
+  toastUI.show("Claim functionality coming soon!", "success");
+}
+
 async function openItemDetails(itemId) {
   // Show loading via toast perhaps
   console.log("Fetching details for item:", itemId);
@@ -1323,29 +1338,87 @@ async function openItemDetails(itemId) {
     document.getElementById('detailsDescription').textContent = item.description;
 
     // Contact Logic
-    document.getElementById('detailsPosterName').textContent = item.posted_by || "User";
-
-    const btnEmail = document.getElementById('btnContactEmail');
-    const btnPhone = document.getElementById('btnContactPhone');
-
-    if (item.contact && item.contact.email) {
-      btnEmail.style.display = "flex";
-      btnEmail.onclick = () => window.location.href = `mailto:${item.contact.email}?subject=Regarding ${item.title} on YoFoundIt`;
+    const contactLabel = document.getElementById('detailsContactLabel');
+    if (contactLabel) {
+      if (item.isAddedByUser) {
+        contactLabel.innerHTML = `Uploaded by <span id="detailsPosterName">You</span>`;
+      } else {
+        const posterName = item.posted_by || "User";
+        contactLabel.innerHTML = `Contact <span id="detailsPosterName">${posterName}</span>`;
+      }
     } else {
-      btnEmail.style.display = "none";
+      document.getElementById('detailsPosterName').textContent = item.posted_by || "User";
     }
 
-    if (item.contact && item.contact.phone) {
-      btnPhone.style.display = "flex";
-      btnPhone.onclick = () => window.location.href = `tel:${item.contact.phone}`;
+    const claimBtnWrapper = document.getElementById('claimBtnWrapper');
+    const claimBtn = document.getElementById('btnClaim');
+    const claimLockOverlay = document.getElementById('claimLockOverlay');
+
+    // Set button text and color based on ownership or item type
+    if (item.isAddedByUser) {
+      claimBtn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        Delete Item
+      `;
+      claimBtn.className = 'contact-btn claim-btn claim-btn-danger';
+      claimBtn.onclick = (e) => {
+        promptDeleteItem(e, item.item_id, item.title, () => {
+          closeItemDetails();
+        });
+      };
+    } else if (isLost) {
+      claimBtn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        Found It
+      `;
+      claimBtn.className = 'contact-btn claim-btn claim-btn-success';
+      claimBtn.onclick = handleClaimClick;
     } else {
-      btnPhone.style.display = "none";
+      claimBtn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        Claim Item
+      `;
+      claimBtn.className = 'contact-btn claim-btn claim-btn-primary';
+      claimBtn.onclick = handleClaimClick;
+    }
+
+    const isLoggedIn = localStorage.getItem("yfi_token");
+
+    if (item.isAddedByUser) {
+      claimBtnWrapper.classList.remove('locked');
+      claimLockOverlay.style.display = 'none';
+      claimBtn.disabled = false;
+      claimBtn.style.opacity = '1';
+      claimBtn.style.pointerEvents = 'all';
+    } else if (isLoggedIn) {
+      claimBtnWrapper.classList.remove('locked');
+      claimLockOverlay.style.display = 'none';
+      claimBtn.disabled = false;
+      claimBtn.style.opacity = '1';
+      claimBtn.style.pointerEvents = 'all';
+    } else {
+      claimBtnWrapper.classList.add('locked');
+      claimLockOverlay.style.display = 'flex';
+      claimBtn.disabled = true;
+      claimBtn.style.opacity = '0.6';
+      claimBtn.style.pointerEvents = 'none';
     }
 
     // Carousel Logic
     const carouselOpts = document.getElementById('detailsCarousel');
     carouselOpts.innerHTML = ''; // Clear old images
-    
+
     const viewerCarousel = document.getElementById('imageViewerCarousel');
     if (viewerCarousel) viewerCarousel.innerHTML = '';
 
@@ -1362,7 +1435,7 @@ async function openItemDetails(itemId) {
     } else {
       carouselOpts.style.display = 'none'; // hide carousel if 0 images
       document.getElementById('detailsIndicators').style.display = 'none';
-      if(document.getElementById('viewerIndicators')) document.getElementById('viewerIndicators').style.display = 'none';
+      if (document.getElementById('viewerIndicators')) document.getElementById('viewerIndicators').style.display = 'none';
     }
 
     // Slide it in
@@ -1385,44 +1458,44 @@ function setupCarouselIndicators(carouselId, indicatorsId) {
   const carousel = document.getElementById(carouselId);
   const indicatorsContainer = document.getElementById(indicatorsId);
   if (!carousel || !indicatorsContainer) return;
-  
+
   const images = Array.from(carousel.querySelectorAll('img'));
   if (images.length <= 1) {
     indicatorsContainer.style.display = 'none';
     return;
   }
-  
+
   indicatorsContainer.style.display = 'flex';
   indicatorsContainer.innerHTML = '';
-  
+
   images.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
     dot.onclick = () => {
-        images[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      images[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     };
     indicatorsContainer.appendChild(dot);
   });
-  
+
   // Throttle or just simple assign
   carousel.onscroll = () => {
     let closestIndex = 0;
     let minDiff = Infinity;
-    
+
     images.forEach((img, i) => {
       const carouselRect = carousel.getBoundingClientRect();
       const imgRect = img.getBoundingClientRect();
-      
+
       const carouselCenter = carouselRect.left + carouselRect.width / 2;
       const imgCenter = imgRect.left + imgRect.width / 2;
       const diff = Math.abs(carouselCenter - imgCenter);
-      
+
       if (diff < minDiff) {
         minDiff = diff;
         closestIndex = i;
       }
     });
-    
+
     const dots = indicatorsContainer.querySelectorAll('.carousel-dot');
     dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === closestIndex);
@@ -1434,12 +1507,12 @@ function setupCarouselIndicators(carouselId, indicatorsId) {
 function openImageViewer(index) {
   const modal = document.getElementById('imageViewerModal');
   const carousel = document.getElementById('imageViewerCarousel');
-  
+
   if (!modal || !carousel) return;
-  
+
   modal.classList.remove('closing');
   modal.classList.add('active');
-  
+
   // Delay scroll slightly to ensure elements are rendered and visible
   setTimeout(() => {
     const images = carousel.querySelectorAll('.viewer-fullscreen-img');
@@ -1452,7 +1525,7 @@ function openImageViewer(index) {
 function closeImageViewer() {
   const modal = document.getElementById('imageViewerModal');
   if (!modal) return;
-  
+
   modal.classList.add('closing');
   setTimeout(() => {
     modal.classList.remove('active');

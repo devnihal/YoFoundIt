@@ -1989,6 +1989,78 @@ textarea.uiinputbox {
   color: white;
 }
 
+/* Claim Button Styles */
+.claim-btn-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.claim-btn {
+  color: white;
+  width: 100%;
+}
+
+.claim-btn-primary {
+  background-color: var(--theme-color);
+}
+
+.claim-btn-primary:hover {
+  background-color: #2a3f4d;
+}
+
+.claim-btn-success {
+  background-color: var(--yfiui-green);
+}
+
+.claim-btn-success:hover {
+  background-color: #009035;
+}
+
+.claim-btn-danger {
+  background-color: var(--yfiui-red);
+}
+
+.claim-btn-danger:hover {
+  background-color: #c82333;
+}
+
+.claim-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.claim-btn-primary:disabled:hover {
+  background-color: var(--theme-color);
+}
+
+.claim-btn-success:disabled:hover {
+  background-color: var(--yfiui-green);
+}
+
+.claim-btn:disabled:hover {
+  background-color: var(--theme-color);
+}
+
+.claim-lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(247, 242, 233, 0.5);
+  border-radius: 12px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.claim-btn-wrapper.locked .claim-lock-overlay {
+  display: flex;
+}
+
 /* ------ User Profile My Items List ------ */
 .my-items-container {
   width: 100%;

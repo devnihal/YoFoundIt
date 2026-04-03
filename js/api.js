@@ -196,11 +196,18 @@ async function fetchMoreItems(lastId) {
  * Fetch Item Details
  * GET /items/get_details.php?item_id={id}
  */
-async function fetchItemDetails(itemId) {
+async function fetchItemDetails(itemId, token = null) {
     try {
-        const response = await fetch(`${endpoints.getItemDetails}?item_id=${itemId}`, {
+        const t = token || (typeof localStorage !== 'undefined' ? localStorage.getItem('yfi_token') : null);
+        const options = {
             method: 'GET'
-        });
+        };
+        if (t) {
+            options.headers = {
+                'Authorization': `Bearer ${t}`
+            };
+        }
+        const response = await fetch(`${endpoints.getItemDetails}?item_id=${itemId}`, options);
         const result = await response.json();
         return { status: response.status, data: result };
     } catch (error) {
