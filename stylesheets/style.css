@@ -219,12 +219,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
   padding: 20px 20px;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  position: relative;
   /* position: absolute;
     top: 0px;
     left: 0px;
@@ -2039,6 +2039,14 @@ textarea.uiinputbox {
 
 .claim-btn:disabled:hover {
   background-color: var(--theme-color);
+}
+
+.claim-btn-taken {
+  background-color: #d1d5db !important;
+  color: #6b7280 !important;
+  cursor: not-allowed !important;
+  opacity: 0.8 !important;
+  box-shadow: none !important;
 }
 
 .claim-lock-overlay {

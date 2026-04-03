@@ -16,7 +16,8 @@ const endpoints = {
     getCategories: `${HOST}/categories/get.php`,
     getMyItems: `${HOST}/items/my_items.php`,
     deleteItem: `${HOST}/items/delete.php`,
-    getMoreItems: `${HOST}/items/get_more.php`
+    getMoreItems: `${HOST}/items/get_more.php`,
+    claimItem: `${HOST}/items/claim.php`
 };
 
 /**
@@ -162,11 +163,14 @@ async function addItem(token, formData) {
 /**
  * Fetch Home Feed
  */
-async function fetchLatestItems() {
+async function fetchLatestItems(token = null) {
     try {
-        const response = await fetch(endpoints.getLatestItems, {
-            method: 'GET'
-        });
+        const t = token || (typeof localStorage !== 'undefined' ? localStorage.getItem('yfi_token') : null);
+        const options = { method: 'GET' };
+        if (t) {
+            options.headers = { 'Authorization': `Bearer ${t}` };
+        }
+        const response = await fetch(endpoints.getLatestItems, options);
         const result = await response.json();
         return { status: response.status, data: result };
     } catch (error) {
@@ -179,11 +183,14 @@ async function fetchLatestItems() {
  * Fetch More Items (pagination)
  * GET /items/get_more.php?last_id={lastId}
  */
-async function fetchMoreItems(lastId) {
+async function fetchMoreItems(lastId, token = null) {
     try {
-        const response = await fetch(`${endpoints.getMoreItems}?last_id=${lastId}`, {
-            method: 'GET'
-        });
+        const t = token || (typeof localStorage !== 'undefined' ? localStorage.getItem('yfi_token') : null);
+        const options = { method: 'GET' };
+        if (t) {
+            options.headers = { 'Authorization': `Bearer ${t}` };
+        }
+        const response = await fetch(`${endpoints.getMoreItems}?last_id=${lastId}`, options);
         const result = await response.json();
         return { status: response.status, data: result };
     } catch (error) {
@@ -254,6 +261,28 @@ async function deleteItem(token, itemId) {
         return { status: response.status, data: result };
     } catch (error) {
         console.error("Delete item error:", error);
+        return { status: 500, data: { success: false, message: "Network or Server Error" } };
+    }
+}
+
+/**
+ * Claim Item
+ * POST /items/claim.php
+ */
+async function claimItem(token, itemId) {
+    try {
+        const response = await fetch(endpoints.claimItem, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ item_id: itemId })
+        });
+        const result = await response.json();
+        return { status: response.status, data: result };
+    } catch (error) {
+        console.error("Claim item error:", error);
         return { status: 500, data: { success: false, message: "Network or Server Error" } };
     }
 }

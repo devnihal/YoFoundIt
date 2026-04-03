@@ -287,7 +287,6 @@ function blurtheonthis(element) {
 
   let easedBlurValue = iosEaseOut(normalizedScroll);
   let blurAmount = easedBlurValue * maxBlurPx;
-
   element.style.backdropFilter = `blur(${blurAmount}px) brightness(${100 - easedBlurValue * 50
     }%)`;
   greeter.style.transform = `scale(${1 - easedBlurValue * 0.1})translateY(${easedBlurValue * 50
@@ -935,6 +934,7 @@ async function handleLogout() {
   updateProfileView();
   closewindow("profile");
   setTimeout(() => redirectTo("home"), 200);
+  window.location.reload();
 }
 
 function showAlertModal(svgContent, title, message, actionText, onConfirm, isDestructive = false) {
@@ -1304,13 +1304,39 @@ function closeItemDetails() {
   }
 }
 
-function handleClaimClick() {
-  const isLoggedIn = localStorage.getItem("yfi_token");
-  if (!isLoggedIn) {
+async function handleClaimClick(itemId, isLost = false) {
+  const token = localStorage.getItem("yfi_token");
+  if (!token) {
     showLoginAlert();
     return;
   }
-  toastUI.show("Claim functionality coming soon!", "success");
+
+  if (!itemId) {
+    toastUI.show("Cannot claim this item.", "error");
+    return;
+  }
+
+  const claimBtn = document.getElementById('btnClaim');
+  const originalHtml = claimBtn.innerHTML;
+  claimBtn.innerHTML = "Processing...";
+  claimBtn.disabled = true;
+
+  const res = await claimItem(token, itemId);
+
+  if (res.data && res.data.success) {
+    toastUI.show(res.data.message || "Item claimed successfully", "success");
+
+    // Change button text and keep it disabled to show it's claimed
+    claimBtn.innerHTML = isLost ? "Reported as Found" : "Already Claimed";
+    claimBtn.className = 'contact-btn claim-btn claim-btn-taken';
+    claimBtn.disabled = true;
+    claimBtn.style.opacity = '';
+    // We intentionally don't restore originalHtml or disable=false here
+  } else {
+    toastUI.show(res.data.message || "Failed to claim item", "error");
+    claimBtn.innerHTML = originalHtml;
+    claimBtn.disabled = false;
+  }
 }
 
 async function openItemDetails(itemId) {
@@ -1380,7 +1406,7 @@ async function openItemDetails(itemId) {
         Found It
       `;
       claimBtn.className = 'contact-btn claim-btn claim-btn-success';
-      claimBtn.onclick = handleClaimClick;
+      claimBtn.onclick = () => handleClaimClick(item.item_id, isLost);
     } else {
       claimBtn.innerHTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1390,7 +1416,7 @@ async function openItemDetails(itemId) {
         Claim Item
       `;
       claimBtn.className = 'contact-btn claim-btn claim-btn-primary';
-      claimBtn.onclick = handleClaimClick;
+      claimBtn.onclick = () => handleClaimClick(item.item_id, isLost);
     }
 
     const isLoggedIn = localStorage.getItem("yfi_token");
@@ -1413,6 +1439,15 @@ async function openItemDetails(itemId) {
       claimBtn.disabled = true;
       claimBtn.style.opacity = '0.6';
       claimBtn.style.pointerEvents = 'none';
+    }
+
+    if (item.actionTaken && !item.isAddedByUser) {
+      claimBtn.innerHTML = isLost ? "Reported as Found" : "Already Claimed";
+      claimBtn.className = 'contact-btn claim-btn claim-btn-taken';
+      claimBtn.disabled = true;
+      claimBtn.style.opacity = '';
+      claimBtn.style.pointerEvents = 'all'; // Let it receive clicks but do nothing due to disabled attribute
+      claimBtn.onclick = null;
     }
 
     // Carousel Logic
