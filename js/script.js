@@ -183,7 +183,11 @@ async function loadMoreItems() {
 
   // Ensure spinner is visible for at least 500ms
   const minSpinnerDelay = new Promise(resolve => setTimeout(resolve, 500));
-  const [res] = await Promise.all([fetchMoreItems(lastItemId), minSpinnerDelay]);
+  const [res] = await Promise.all([fetchMoreItems(lastItemId, localStorage.getItem('yfi_token')), minSpinnerDelay]);
+
+  if (res.data && res.data.notifications) {
+    renderNotifications(res.data.notifications);
+  }
 
   if (res.data && res.data.success && res.data.data && res.data.data.length > 0) {
     const feedContainer = document.getElementById("homeFeedContainer");
@@ -227,9 +231,13 @@ async function loadHomeFeed() {
   isLoadingMore = false;
   hasMoreItems = true;
 
-  const res = await fetchLatestItems();
+  const res = await fetchLatestItems(localStorage.getItem('yfi_token'));
 
   feedContainer.innerHTML = "";
+
+  if (res.data && res.data.notifications) {
+    renderNotifications(res.data.notifications);
+  }
 
   if (res.data && res.data.success && res.data.data && res.data.data.length > 0) {
     const items = res.data.data;
@@ -417,6 +425,7 @@ const nav_bg_box_pos = {
   search: 20,
   add: 40,
   profile: 60,
+  notification: 80,
   settings: 80,
   itemdetails: 0
 };
@@ -425,6 +434,7 @@ const window_names = {
   search: "windowsearch",
   add: "windowadd",
   profile: "windowaccount",
+  notification: "windownotification",
   settings: 80,
   itemdetails: "windowitemdetails"
 };
@@ -487,6 +497,12 @@ window.onpopstate = function (event) {
     sessionStorage.setItem("pagepath", JSON.stringify(path));
     history.replaceState(null, "", location.href);
     closewindow("itemdetails");
+  } else if (path[path.length - 1] == "notification") {
+    path.pop();
+    sessionStorage.setItem("pagepath", JSON.stringify(path));
+    history.replaceState(null, "", location.href);
+    closewindow("notification");
+    handleNotificationPanelClose();
   }
   if (path[path.length - 1] === "home") {
     document.querySelector(".nav-active-box").style.left = "0%";
@@ -1567,3 +1583,109 @@ function closeImageViewer() {
     modal.classList.remove('closing');
   }, 300);
 }
+
+// ------ Notification Logic ------
+let currentNotificationsRaw = "[]";
+let unreadNotificationIdsToRead = [];
+
+window.addEventListener('pagehide', () => {
+  handleNotificationPanelClose();
+});
+
+function handleNotificationPanelClose() {
+  if (!unreadNotificationIdsToRead || unreadNotificationIdsToRead.length === 0) return;
+  const token = localStorage.getItem("yfi_token");
+  if (token) {
+    unreadNotificationIdsToRead.forEach(id => {
+      readNotification(token, id); // Uses keepalive: true implicitly sending in the background
+    });
+  }
+
+  // Update UI immediately for subsequent re-opens
+  const unreadItems = document.querySelectorAll('#notificationContainer .notification-item.unread');
+  unreadItems.forEach(el => {
+    el.classList.remove('unread');
+    el.classList.add('read');
+    const dot = el.querySelector('.notification-dot');
+    if (dot) dot.remove();
+  });
+
+  const bubble = document.getElementById("notificationBubble");
+  if (bubble) bubble.style.display = "none";
+
+  if (currentNotificationsRaw !== "[]") {
+    let currentNotifs = JSON.parse(currentNotificationsRaw);
+    currentNotifs.forEach(n => { n.is_read = true; });
+    currentNotificationsRaw = JSON.stringify(currentNotifs);
+  }
+
+  unreadNotificationIdsToRead = [];
+}
+
+function renderNotifications(notificationsPayload) {
+  const notifications = Array.isArray(notificationsPayload) ? notificationsPayload : [];
+
+  const newNotificationsRaw = JSON.stringify(notifications);
+  if (currentNotificationsRaw === newNotificationsRaw) return;
+  currentNotificationsRaw = newNotificationsRaw;
+
+  // Store unread items for subsequent API reading on panel close
+  unreadNotificationIdsToRead = notifications.filter(n => !n.is_read).map(n => n.notification_id);
+
+  const bubble = document.getElementById("notificationBubble");
+  const container = document.getElementById("notificationContainer");
+
+  if (!container) return;
+
+  if (notifications.length === 0) {
+    if (bubble) bubble.style.display = "none";
+    container.innerHTML = `<div class="empty-state" style="text-align:center; padding: 20px; color:#777;">No notifications in the inbox</div>`;
+    return;
+  }
+
+  const unreadCount = notifications.filter(n => !n.is_read).length;
+
+  if (bubble) {
+    if (unreadCount > 0) {
+      bubble.style.display = "flex";
+      bubble.innerText = unreadCount > 99 ? '99+' : unreadCount;
+    } else {
+      bubble.style.display = "none";
+    }
+  }
+
+  let html = "";
+  notifications.forEach(n => {
+    const isUnread = !n.is_read;
+    let contentReplaced = n.content || "";
+    if (n.user_name) {
+      // Replace <user_name> or any occurrences of n.user_name
+      contentReplaced = contentReplaced.replace(/<user_name>/g, `<span class="highlight-user">${n.user_name}</span>`);
+    }
+
+    let actionsHtml = "";
+    if (n.type === "claimed" || n.type === "found") {
+      actionsHtml = `
+        <div class="notification-actions">
+          <a href="https://wa.me/${n.whatsapp_number}" target="_blank" class="contact-btn claim-btn claim-btn-success notif-action-btn">WhatsApp</a>
+          <a href="mailto:${n.email}" target="_blank" class="contact-btn claim-btn claim-btn-primary notif-action-btn">Email</a>
+        </div>
+      `;
+    }
+
+    html = `<div class="notification-item ${isUnread ? 'unread' : 'read'}" data-id="${n.notification_id}">
+        <div class="notification-content-wrapper">
+          <div class="notification-header">
+            <h3 class="notification-title">${n.title}</h3>
+            <span class="notification-time">${timeSince(n.created_at)}</span>
+          </div>
+          <p class="notification-text">${contentReplaced}</p>
+          ${actionsHtml}
+        </div>
+        ${isUnread ? '<div class="notification-dot"></div>' : ''}
+      </div>`;
+  });
+
+  container.innerHTML = html;
+}
+

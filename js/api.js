@@ -2,7 +2,7 @@ const FRONTEND_HOST = window.location.hostname;
 const IS_DEV = FRONTEND_HOST === 'localhost' || FRONTEND_HOST === '127.0.0.1';
 
 // When transitioning to production, the production backend URL will be used.
-const HOST = IS_DEV ? 'http://localhost/YoFoundIt' : 'https://api.yourproductiondomain.com';
+const HOST = IS_DEV ? 'http://localhost/YoFoundIt' : 'http://yofoundit.infinityfreeapp.com/';
 
 const endpoints = {
     login: `${HOST}/authentication/login.php`,
@@ -17,7 +17,8 @@ const endpoints = {
     getMyItems: `${HOST}/items/my_items.php`,
     deleteItem: `${HOST}/items/delete.php`,
     getMoreItems: `${HOST}/items/get_more.php`,
-    claimItem: `${HOST}/items/claim.php`
+    claimItem: `${HOST}/items/claim.php`,
+    readNotification: `${HOST}/notifications/read.php`
 };
 
 /**
@@ -283,6 +284,29 @@ async function claimItem(token, itemId) {
         return { status: response.status, data: result };
     } catch (error) {
         console.error("Claim item error:", error);
+        return { status: 500, data: { success: false, message: "Network or Server Error" } };
+    }
+}
+
+/**
+ * Mark Notification as Read
+ * POST /notifications/read.php
+ */
+async function readNotification(token, notificationId) {
+    try {
+        const response = await fetch(endpoints.readNotification, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ notification_id: notificationId }),
+            keepalive: true
+        });
+        const result = await response.json();
+        return { status: response.status, data: result };
+    } catch (error) {
+        console.error("Read notification error:", error);
         return { status: 500, data: { success: false, message: "Network or Server Error" } };
     }
 }
