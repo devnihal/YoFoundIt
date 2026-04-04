@@ -1,7 +1,17 @@
+/**
+ * @file api.js
+ * @description Centralised API client for the YoFoundIt frontend.
+ *
+ * Exports one fetch-wrapper per backend endpoint. Every function returns
+ * a normalised { status, data } object so callers never need to handle
+ * raw Response objects.
+ *
+ * HOST is resolved at runtime: localhost → dev backend, otherwise production.
+ */
+
 const FRONTEND_HOST = window.location.hostname;
 const IS_DEV = FRONTEND_HOST === 'localhost' || FRONTEND_HOST === '127.0.0.1';
 
-// When transitioning to production, the production backend URL will be used.
 const HOST = IS_DEV ? 'http://localhost/YoFoundIt' : 'https://yofoundit-production.up.railway.app';
 
 const endpoints = {
@@ -88,7 +98,7 @@ async function verifySession(token) {
 async function logoutUser(token) {
     try {
         const response = await fetch(endpoints.logout, {
-            method: 'POST', // Using POST as standard for state-changing logout
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

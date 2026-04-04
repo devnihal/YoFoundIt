@@ -44,7 +44,6 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 10000000000000;
-  /* display: none; */
 }
 
 #logoContainer {
@@ -178,8 +177,6 @@ body {
 #content {
   display: flex;
   flex-direction: column;
-  /* align-items: center;
-    justify-content: center; */
   position: relative;
   height: 100dvh;
   width: 650px;
@@ -225,10 +222,6 @@ body {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   position: relative;
-  /* position: absolute;
-    top: 0px;
-    left: 0px;
-    padding: 20px; */
 }
 
 .logo {
@@ -627,7 +620,6 @@ body {
   left: 50%;
   right: 10px;
   width: calc(100% - 20px);
-  /* padding: 20px 5px 15px 5px; */
   background-color: var(--theme-color);
   border-radius: 30px;
   display: flex;
@@ -645,7 +637,6 @@ body {
   .navigation-bar {
     width: 630px;
     left: 50vw;
-    /* padding: 30px 5px 20px 5px; */
   }
 }
 
@@ -697,7 +688,6 @@ body {
   width: 100vw;
   max-width: 680px;
   background-color: var(--theme-accent);
-  /* background-color: red; */
   z-index: 4;
   position: fixed;
   top: 0;
@@ -713,7 +703,6 @@ body {
 .window-titlebar {
   width: 100vw;
   padding: 15px;
-  /* box-shadow: 0px 10px 15px black; */
 }
 
 .window-back {
@@ -723,7 +712,6 @@ body {
   justify-content: flex-start;
   font-weight: 500;
   width: fit-content;
-  /* background-color: red; */
   gap: 0;
   cursor: pointer;
   transition: 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -781,7 +769,6 @@ body {
   color: var(--theme-color);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  /* box-shadow: 0 4px 15px rgba(30, 47, 59, 0.05); */
   transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   outline: none;
 }
@@ -1030,7 +1017,6 @@ button:disabled {
 }
 
 select.addinputbox {
-  /* all: unset; */
   width: 100%;
   margin-inline: auto;
   font-size: 23px;
@@ -1058,41 +1044,8 @@ textarea.uiinputbox {
   padding: 10px 15px;
   border-radius: 10px;
   border: none;
-  /* position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateY(calc(-100% - 10px))translateX(-50%); */
-  /* position: static;
-    transform: none;
-    width: 90%;
-    margin: 20px auto;
-    font-size: 24px; */
-  /* position: absolute;
-    bottom: calc(env(safe-area-inset-bottom, 20px) + 10px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    color: var(--theme-accent);
-    background-color: var(--theme-color);
-    font-size: 28px;
-    padding: 10px 15px;
-    border-radius: 10px;
-    border: none;
-    z-index: 10; */
 }
 
-/* .sbmtbtn::before{
-    content: "";
-    display: inline-block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    transform: translateY(-100%);
-    height: 100%;
-    width: 100%;
-    background-color: red;
-    z-index: -2;
-} */
 .imageuploadlabel {
   font-size: 26px;
   width: 100%;
@@ -1116,7 +1069,6 @@ textarea.uiinputbox {
 }
 
 .signupform {
-  /* background-color: red; */
   height: calc(100svh - 60px);
   padding: 10px 20px;
   display: flex;
@@ -1130,7 +1082,6 @@ textarea.uiinputbox {
 .collapedfield {
   width: 100%;
   max-height: 0;
-  /* overflow: hidden; */
   opacity: 0;
   visibility: hidden;
   transition: max-height 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
@@ -1193,7 +1144,6 @@ textarea.uiinputbox {
       var(--theme-color) 0%,
       var(--theme-color) 50%,
       transparent 50%);
-  /* background-image: none; */
   background-size: 100% 200%;
   background-position: 0% 100%;
   margin-inline: auto;
@@ -1203,8 +1153,8 @@ textarea.uiinputbox {
 }
 
 .accformtitle:hover {
+  /* On hover, shift the gradient up to reveal the colored-background state */
   background-position: 0% 0%;
-  /* Moves the colored half into view */
 }
 
 .accbtmtxt {
@@ -1215,7 +1165,6 @@ textarea.uiinputbox {
       var(--theme-color) 0%,
       var(--theme-color) 50%,
       transparent 50%);
-  /* background-image: none; */
   background-size: 200%;
   background-position: 100%;
   transition: 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);

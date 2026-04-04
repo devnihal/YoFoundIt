@@ -1,10 +1,20 @@
-// let loader = ` <div id="logoContainer"><svg width="378" height="150" version="1.1" id="mainlogo" viewBox="0 0 378.5 150.79" >
-//     <path  id="logo-bubble" d="m34.497 108.77c-16.794 0-30.679-6.7989-30.679-25.114v-55.306c0-14.562 9.9642-24.527 24.527-24.527h321.8c14.562 0 24.527 9.9646 24.527 24.527v55.306c0 12.572-7.9986 24.529-24.527 24.529h-274.38l-40.681 38.785z" fill="none" stroke="#1e2f3b" stroke-linecap="round" stroke-linejoin="round" stroke-width="7.6348" style="paint-order:stroke markers fill"/>
-//     <path id="logo-text" d="m121.73 35.235-14.037 27.064v14.454h-8.3272v-14.454l-14.096-27.064h9.3978l8.9219 18.974 8.8625-18.974zm9.0609 42.052c-3.1722 0-6.0272-0.69392-8.565-2.0818-2.5378-1.4275-4.5402-3.43-6.0075-6.0075-1.4275-2.5774-2.1413-5.5514-2.1413-8.9219s0.73359-6.3445 2.2007-8.9219c1.5068-2.5774 3.5489-4.5601 6.1264-5.9479 2.5774-1.4275 5.4523-2.1413 8.6245-2.1413s6.0471 0.71376 8.6245 2.1413c2.5774 1.3878 4.5997 3.3705 6.0669 5.9479 1.5068 2.5774 2.2602 5.5514 2.2602 8.9219s-0.77323 6.3445-2.3197 8.9219c-1.5068 2.5774-3.5688 4.58-6.1859 6.0075-2.5774 1.3878-5.4722 2.0818-8.684 2.0818zm0-7.2565c1.5068 0 2.9145-0.35688 4.2231-1.0706 1.3482-0.75341 2.4188-1.8637 3.2119-3.3309 0.79306-1.4672 1.1896-3.2516 1.1896-5.3532 0-3.1326-0.83271-5.5316-2.4981-7.197-1.6258-1.7051-3.6282-2.5576-6.0075-2.5576-2.3792 0-4.3817 0.85254-6.0075 2.5576-1.5861 1.6654-2.3791 4.0644-2.3791 7.197s0.77323 5.5514 2.3197 7.2565c1.5861 1.6654 3.5688 2.4981 5.9479 2.4981zm44.912-34.796v6.7212h-17.308v10.647h13.264v6.6022h-13.264v17.546h-8.3272v-41.516zm15.327 42.052c-3.1722 0-6.0272-0.69392-8.565-2.0818-2.5378-1.4275-4.5402-3.43-6.0075-6.0075-1.4275-2.5774-2.1413-5.5514-2.1413-8.9219s0.73359-6.3445 2.2007-8.9219c1.5068-2.5774 3.5489-4.5601 6.1264-5.9479 2.5774-1.4275 5.4523-2.1413 8.6245-2.1413s6.0471 0.71376 8.6245 2.1413c2.5774 1.3878 4.5997 3.3705 6.0669 5.9479 1.5068 2.5774 2.2602 5.5514 2.2602 8.9219s-0.77324 6.3445-2.3197 8.9219c-1.5068 2.5774-3.5688 4.58-6.1859 6.0075-2.5774 1.3878-5.4722 2.0818-8.684 2.0818zm0-7.2565c1.5068 0 2.9145-0.35688 4.2231-1.0706 1.3482-0.75341 2.4188-1.8637 3.2119-3.3309 0.79304-1.4672 1.1896-3.2516 1.1896-5.3532 0-3.1326-0.83271-5.5316-2.4981-7.197-1.6258-1.7051-3.6282-2.5576-6.0075-2.5576-2.3792 0-4.3817 0.85254-6.0075 2.5576-1.5861 1.6654-2.3791 4.0644-2.3791 7.197s0.77323 5.5514 2.3197 7.2565c1.5861 1.6654 3.5688 2.4981 5.9479 2.4981zm50.961-26.23v32.951h-8.3866v-4.1635c-1.0706 1.4275-2.4783 2.5576-4.2231 3.3903-1.7051 0.79306-3.5688 1.1896-5.591 1.1896-2.5774 0-4.8575-0.53532-6.8401-1.6059-1.9827-1.1103-3.5489-2.7163-4.6988-4.8178-1.1103-2.1413-1.6654-4.6791-1.6654-7.6134v-19.33h8.3272v18.142c0 2.6171 0.65426 4.6394 1.9628 6.0669 1.3085 1.3878 3.0929 2.0818 5.3532 2.0818 2.2998 0 4.1041-0.69392 5.4126-2.0818 1.3085-1.4275 1.9628-3.4498 1.9628-6.0669v-18.142zm22.428-0.47584c3.9256 0 7.0978 1.2491 9.5167 3.7472 2.4188 2.4584 3.6282 5.9083 3.6282 10.349v19.33h-8.3272v-18.201c0-2.6171-0.65427-4.6196-1.9628-6.0075-1.3085-1.4275-3.0929-2.1413-5.3532-2.1413-2.2998 0-4.1239 0.71375-5.472 2.1413-1.3085 1.3878-1.9628 3.3903-1.9628 6.0075v18.201h-8.3272v-32.951h8.3272v4.1041c1.1103-1.4275 2.518-2.5378 4.2231-3.3309 1.7447-0.83272 3.6481-1.2491 5.71-1.2491zm16.606 16.833c0-3.3309 0.65427-6.285 1.9628-8.8625 1.3482-2.5774 3.1722-4.5601 5.4722-5.9479 2.2998-1.3878 4.8576-2.0818 7.6729-2.0818 2.1413 0 4.1834 0.47584 6.1264 1.4275 1.943 0.91202 3.4895 2.1413 4.6394 3.6878v-15.643h8.446v44.015h-8.446v-4.8773c-1.031 1.6258-2.4783 2.9343-4.342 3.9256s-4.0248 1.487-6.4832 1.487c-2.7757 0-5.3135-0.71375-7.6134-2.1413-2.3-1.4275-4.1239-3.43-5.4722-6.0075-1.3085-2.6171-1.9628-5.6109-1.9628-8.9814zm25.934 0.11895c0-2.0223-0.39653-3.7472-1.1896-5.1747-0.79307-1.4672-1.8637-2.5774-3.2119-3.3309-1.3482-0.79306-2.7956-1.1896-4.342-1.1896-1.5465 0-2.974 0.37671-4.2825 1.1301-1.3085 0.7534-2.3791 1.8637-3.2119 3.3309-0.79307 1.4275-1.1896 3.1326-1.1896 5.1153s0.39653 3.7274 1.1896 5.2342c0.8327 1.4672 1.9033 2.5973 3.2119 3.3903 1.3482 0.79306 2.7757 1.1896 4.2825 1.1896 1.5465 0 2.9938-0.37671 4.342-1.1301 1.3482-0.79306 2.4188-1.9034 3.2119-3.3309 0.79306-1.4672 1.1896-3.2119 1.1896-5.2342zm20.823-25.041v41.516h-8.3272v-41.516zm14.441 15.405v15.941c0 1.1103 0.25774 1.9231 0.77323 2.4387 0.55514 0.47584 1.4672 0.71375 2.736 0.71375h3.8662v7.0185h-5.2342c-7.0185 0-10.528-3.4102-10.528-10.23v-15.881h-3.9256v-6.8401h3.9256v-8.1487h8.3866v8.1487h7.3754v6.8401z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#1e2f3b" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" stroke-width="1.0907"  aria-label="YoFoundIt"/>
-//     <g id="logo-lens" fill="none" stroke="#1e2f3b">
-//         <path id="logo-lens-circle" d="m44.978 41.278a19.703 19.703 0 0 0 0 27.865 19.703 19.703 0 0 0 27.865 0 19.703 19.703 0 0 0 0-27.865 19.703 19.703 0 0 0-27.865 0z" stroke-width="7.6349"/>
-//         <path id="logo-lens-line" d="m44.98 69.07-18.644 19.203" stroke-linecap="round" stroke-width="7.6348"/>
-//     </g></svg></div><h1 id="loading-text">Finding Lost Items...</h1>`;
+/**
+ * @file script.js
+ * @description Main application controller for the YoFoundIt frontend.
+ *
+ * Responsibilities:
+ *  - Boot sequence: session verification, category loading, home feed render
+ *  - Loading-screen animation and transition
+ *  - Client-side navigation (window stack via History API)
+ *  - Home feed rendering, infinite scroll pagination, and background polling
+ *  - Search (debounced, real-time)
+ *  - Authentication forms (login / sign-up) and profile view
+ *  - Add-item form with multi-image selection, compression, and upload
+ *  - Item detail view with carousel, claim/delete actions
+ *  - Notification inbox rendering and read-state management
+ *  - Reusable UI primitives: ripple effect, toast modal, alert modal
+ */
+
 let Pageloaded = false;
 
 function animate() {
@@ -82,34 +92,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const sessionResponse = await verifySession(token);
       if (sessionResponse.status === 200 && sessionResponse.data && sessionResponse.data.success) {
-        // Token is valid, ensure user data is fresh
         if (sessionResponse.data.user) {
           localStorage.setItem("yfi_user", JSON.stringify(sessionResponse.data.user));
         }
       } else {
-        // Invalid or expired token
+        /* Token invalid or expired — clear stale credentials */
         localStorage.removeItem("yfi_token");
         localStorage.removeItem("yfi_user");
       }
     } catch (err) {
+      /*
+       * Do not clear the token on network errors; the user may simply be
+       * offline temporarily and their session could still be valid.
+       */
       console.error("Session verification failed during load:", err);
-      // Don't arbitrarily delete the token if it's just a network error
     }
   }
 
-  // Enforce DOM update strictly after session auth is validated
   updateProfileView();
   await loadCategories();
   await loadHomeFeed();
-
-  // Start a refresh when user returns to home (handled in onpopstate)
 
   setTimeout(() => {
     Pageloaded = true;
   }, 500);
 });
 
-// ------ Search Logic ------
+/* =============================================================
+ * Search
+ * Debounced live search with keyword highlighting.
+ * ============================================================= */
 (function initSearch() {
   const searchInput = document.getElementById('searchInput');
   const searchBtn = document.getElementById('searchBtn');
@@ -200,9 +212,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 })();
 
-// ------ Background Refresh on Return to Home ------
-let pollIntervalId = null;
-// Track the latest known item_id from the feed to detect new arrivals
+/* =============================================================
+ * Background Polling
+ * Polls the latest-items endpoint every 15 s (started after login).
+ * Compares incoming item IDs against the last known ID to prepend
+ * only genuinely new cards without a full re-render.
+ * ============================================================= */
+let pollIntervalId    = null;
 let latestKnownItemId = null;
 
 async function pollForUpdates() {
@@ -213,36 +229,31 @@ async function pollForUpdates() {
     const res = await fetchLatestItems(token);
     if (!res.data || !res.data.success) return;
 
-    // --- Update notifications if changed ---
     if (res.data.notifications) {
       renderNotifications(res.data.notifications);
     }
 
-    // --- Prepend new feed items silently ---
     if (res.data.data && res.data.data.length > 0) {
-      const incomingItems = res.data.data;
+      const incomingItems  = res.data.data;
       const newestIncoming = incomingItems[0].item_id;
 
-      // On first poll, just record the baseline
+      /* Record baseline on the first poll cycle without modifying the feed */
       if (latestKnownItemId === null) {
         latestKnownItemId = newestIncoming;
         return;
       }
 
-      // Find items newer than what we last saw
       const newItems = incomingItems.filter(item => item.item_id > latestKnownItemId);
       if (newItems.length === 0) return;
 
-      // Prepend new cards to the top of the feed
       const feedContainer = document.getElementById("homeFeedContainer");
       if (!feedContainer) return;
 
-      // Insert newest first (they arrive newest-first already)
+      /* Items arrive newest-first; reverse so the oldest new item is inserted first */
       newItems.reverse().forEach(item => {
         feedContainer.insertAdjacentHTML('afterbegin', renderItemCard(item));
       });
 
-      // Attach ripple to new cards
       const newCards = feedContainer.querySelectorAll(".lfcontainer:not([data-ripple])");
       newCards.forEach(card => {
         card.setAttribute("data-ripple", "true");
@@ -258,12 +269,16 @@ async function pollForUpdates() {
   }
 }
 
-// ------ Home Feed Logic ------
+/* =============================================================
+ * Home Feed
+ * Renders item cards, manages infinite-scroll pagination state,
+ * and updates the background-scroll blur/parallax effect.
+ * ============================================================= */
 
-// Pagination state
-let lastItemId = null;
+/* Pagination state */
+let lastItemId    = null;
 let isLoadingMore = false;
-let hasMoreItems = true;
+let hasMoreItems  = true;
 
 
 
@@ -295,7 +310,10 @@ function renderItemCard(item) {
   `;
 }
 
-// Check if the ghost element is near the viewport — called from blurtheonthis() on scroll
+/**
+ * Checks if the sentinel element is within 300 px of the viewport bottom
+ * and triggers loading more items. Called from blurtheonthis() on scroll.
+ */
 function checkLoadMore() {
   if (!hasMoreItems || isLoadingMore || lastItemId === null) return;
 
@@ -303,7 +321,6 @@ function checkLoadMore() {
   if (!ghost) return;
 
   const ghostTop = ghost.getBoundingClientRect().top;
-  // Trigger when ghost is within 300px of the viewport bottom
   if (ghostTop < window.innerHeight + 300) {
     loadMoreItems();
   }
@@ -318,7 +335,7 @@ async function loadMoreItems() {
   // Show spinner inside ghost
   if (ghost) ghost.innerHTML = '<div class="feed-spinner"></div>';
 
-  // Ensure spinner is visible for at least 500ms
+  /* Ensure the spinner is visible for at least 500 ms to prevent flicker */
   const minSpinnerDelay = new Promise(resolve => setTimeout(resolve, 500));
   const [res] = await Promise.all([fetchMoreItems(lastItemId, localStorage.getItem('yfi_token')), minSpinnerDelay]);
 
@@ -337,7 +354,6 @@ async function loadMoreItems() {
     // Update lastItemId to the oldest item in this batch
     lastItemId = items[items.length - 1].item_id;
 
-    // Attach ripple to new cards
     const newCards = feedContainer.querySelectorAll(".lfcontainer:not([data-ripple])");
     newCards.forEach(card => {
       card.setAttribute("data-ripple", "true");
@@ -346,10 +362,9 @@ async function loadMoreItems() {
       });
     });
 
-    // Clear spinner, keep ghost ready for next trigger
     if (ghost) ghost.innerHTML = '';
   } else {
-    // No more items
+    /* No more items — show end-of-feed message */
     hasMoreItems = false;
     if (ghost) {
       ghost.innerHTML = '<p class="feed-end-message">You\'ve seen it all!</p>';
@@ -363,10 +378,9 @@ async function loadHomeFeed() {
   const feedContainer = document.getElementById("homeFeedContainer");
   if (!feedContainer) return;
 
-  // Reset pagination state
-  lastItemId = null;
+  lastItemId    = null;
   isLoadingMore = false;
-  hasMoreItems = true;
+  hasMoreItems  = true;
 
   const res = await fetchLatestItems(localStorage.getItem('yfi_token'));
 
@@ -383,18 +397,16 @@ async function loadHomeFeed() {
       feedContainer.insertAdjacentHTML('beforeend', renderItemCard(item));
     });
 
-    // Record the newest item_id for polling diff detection
+    /* Seed the polling baseline with the newest item */
     latestKnownItemId = items[0].item_id;
 
-    // Track the oldest item_id from this batch for pagination
+    /* Track the oldest item in this batch for the next pagination request */
     lastItemId = items[items.length - 1].item_id;
 
-    // If we got fewer than 10 items, there are no more to load
     if (items.length < 10) {
       hasMoreItems = false;
     }
 
-    // Always add ghost element at the end
     feedContainer.insertAdjacentHTML('beforeend', '<div class="ghostobj"></div>');
   } else {
     // Empty state
@@ -421,9 +433,7 @@ function blurtheonthis(element) {
 
   let normalizedScroll = Math.min(scrollTop / maxScrollForEffect, 1);
 
-  // iOS-like easing function (smoother than easeOutQuad)
   function iosEaseOut(t) {
-    // cubic-bezier(0.25, 0.1, 0.25, 1) approximation
     return t === 0
       ? 0
       : t === 1
@@ -466,16 +476,6 @@ function blurtheonthis(element) {
 function startUI() {
   let mainContainer = document.querySelector(".lfcontentcontainer");
   mainContainer.style.overflowY = "scroll";
-  // const addBtn = document.querySelector('.addbtn');
-
-  // addBtn.addEventListener('click', function(event) {
-  // rippleEffect(this, event);
-  // });
-
-  // addBtn.addEventListener('touchstart', function(event) {
-  // event.preventDefault();
-  // rippleEffect(this, event);
-  // });
 
   const boxes = document.querySelectorAll(".lfcontainer");
   boxes.forEach((box) => {
@@ -486,18 +486,11 @@ function startUI() {
   const nvbtns = document.querySelectorAll(".nav-button");
   nvbtns.forEach((btn) => {
     btn.addEventListener("click", function (event) {
-      // //console.log(box);
       rippleEffect(this, event);
     });
   });
 
-  // This part was added from the user's snippet, assuming it's meant to be a separate listener
-  // and not replace the nav button ripple effect.
-  // Note: logoutModalWindow needs to be defined elsewhere for this to work.
-  window.addEventListener('click', function (event) {
-    // if (event.target === logoutModalWindow) { // logoutModalWindow is not defined in this context
-    //   hideLogoutModal(); // hideLogoutModal is not defined in this context
-    // }
+  window.addEventListener('click', function (event) { // eslint-disable-line no-unused-vars
   });
 }
 
@@ -554,10 +547,7 @@ window.onclick = (event) => {
   const navButton = event.target.closest(".nav-button");
   if (navButton) {
     const targetValue = navButton.dataset.target;
-    //console.log("Button clicked with data-target:", targetValue);
     redirectTo(targetValue);
-  } else {
-    //console.log("Clicked outside .nav-button");
   }
 };
 const nav_bg_box_pos = {
@@ -586,14 +576,11 @@ function redirectTo(destination) {
   }
 
   document.body.classList.add("lockscroll");
-  // //console.log(JSON.parse(sessionStorage.getItem("pagepath")));
   let path = JSON.parse(sessionStorage.getItem("pagepath"));
   path.push(destination);
   sessionStorage.setItem("pagepath", JSON.stringify(path));
-  // //console.log(path);
   document.querySelector(".nav-active-box").style.left =
     nav_bg_box_pos[destination] + "%";
-  // //console.log(nav_bg_box_pos[destination]);
   let windowEl = document.getElementById(window_names[destination]);
   windowEl.style.willChange = "left";
   windowEl.classList.remove("window-hidden");
@@ -603,12 +590,10 @@ function redirectTo(destination) {
   }
 
   history.pushState({ window: window_names[destination] }, "", "");
-  // alert(history)
   hidenav();
 }
 window.onpopstate = function (event) {
   document.body.classList.remove("lockscroll");
-  // const windowId = event.state?.window || "homeWindow";
   let path = JSON.parse(sessionStorage.getItem("pagepath"));
   if (path[path.length - 1] == "search") {
     path.pop();
@@ -648,15 +633,16 @@ window.onpopstate = function (event) {
   if (path[path.length - 1] === "home") {
     document.querySelector(".nav-active-box").style.left = "0%";
 
-    // 1. Replace current state with 'home'
     history.replaceState({ window: "" }, "home", location.href);
 
-    // 2. Push a dummy state to wipe forward history
+    /*
+     * Push a dummy state immediately so that the next back-press does not
+     * re-trigger this handler and leave the user on a stale history entry.
+     */
     setTimeout(() => {
       history.pushState({ window: "cleared" }, "", "");
     }, 0);
 
-    // 3. Refresh feed + notifications when returning home (only if logged in)
     if (localStorage.getItem("yfi_token")) {
       pollForUpdates();
     }
@@ -668,17 +654,17 @@ function closewindow(windowname) {
     .getElementById(window_names[windowname])
     .classList.add("window-hidden");
 
-  // Only show the bottom navigation bar again if we have completely returned to the home feed
+  /*
+   * Only show the bottom navigation bar again once we have
+   * fully returned to the home feed.
+   */
   let path = JSON.parse(sessionStorage.getItem("pagepath")) || ["home"];
   if (path.length === 0 || path[path.length - 1] === "home") {
     shownav();
   }
 }
 
-// window.onbeforeunload = (event)=>{
-//     event.preventDefault();
-//     return false;
-// }
+// window.onbeforeunload removed — not needed in current navigation model
 
 function signupform() {
   formtype = "signup";
@@ -693,7 +679,6 @@ function signupform() {
   setTimeout(() => {
     title.innerHTML = `Sign Up`;
     title.style.backgroundPosition = "0% -100%";
-    // console.log("hi");
     setTimeout(() => {
       title.style.transition = "none";
       title.style.backgroundPosition = "0% 100%";
@@ -718,7 +703,6 @@ function signupform() {
         <a class="uiurl" href="javascript:void(0);" onclick="signinform()">login</a>
         </span>`;
     bttxt.style.backgroundPosition = "-100%";
-    // console.log("hi");
     setTimeout(() => {
       bttxt.style.transition = "none";
       bttxt.style.backgroundPosition = "100%";
@@ -741,7 +725,6 @@ function signinform() {
   setTimeout(() => {
     title.innerHTML = `Login`;
     title.style.backgroundPosition = "0% -100%";
-    // console.log("hi");
     setTimeout(() => {
       title.style.transition = "none";
       title.style.backgroundPosition = "0% 100%";
@@ -766,7 +749,6 @@ function signinform() {
             <a class="uiurl" href="javascript:void(0);" onclick="signupform()">Sign Up</a>
         </span>`;
     bttxt.style.backgroundPosition = "-100%";
-    // console.log("hi");
     setTimeout(() => {
       bttxt.style.transition = "none";
       bttxt.style.backgroundPosition = "100%";
@@ -943,26 +925,23 @@ async function loadMyItems() {
   const res = await fetchMyItems(token);
 
   if (res.data && res.data.success && res.data.data && res.data.data.length > 0) {
-    // We have items! Build the HTML list
     let html = `<div class="my-items-header">My Items</div>`;
 
-    let lostCount = 0;
+    let lostCount  = 0;
     let foundCount = 0;
 
     res.data.data.forEach(item => {
-      const isLost = item.item_type.toLowerCase() === "lost";
+      const isLost   = item.item_type.toLowerCase() === "lost";
       const tagClass = isLost ? "lost" : "found";
       const tagLabel = isLost ? "LOST" : "FOUND";
 
       if (isLost) lostCount++;
       else foundCount++;
 
-      // Setup thumbnail
+      /* Build item thumbnail HTML */
       let imgHTML = `<div class="myitem-img-placeholder">No Image</div>`;
       if (item.images && item.images.length > 0) {
-        // Use the first image in the array
         const firstImage = Array.isArray(item.images) ? item.images[0] : item.images;
-        // Fix the domain mapping for the backend just like in home feed loading
         const imgUrl = firstImage.startsWith('http') ? firstImage : `${HOST}/${firstImage}`;
         imgHTML = `<img src="${imgUrl}" class="myitem-img" alt="Item Image" loading="lazy">`;
       }
@@ -988,23 +967,21 @@ async function loadMyItems() {
     });
     container.innerHTML = html;
 
-    // Update Profile Stats natively
-    document.getElementById("profileStatLost").innerText = lostCount;
+    document.getElementById("profileStatLost").innerText  = lostCount;
     document.getElementById("profileStatFound").innerText = foundCount;
   } else {
-    // 404 or empty list
     container.innerHTML = `
       <div class="my-items-header">My Items</div>
       <div class="my-items-empty">You haven't posted any items yet!</div>
     `;
 
-    document.getElementById("profileStatLost").innerText = "0";
+    document.getElementById("profileStatLost").innerText  = "0";
     document.getElementById("profileStatFound").innerText = "0";
   }
 }
 
 async function promptDeleteItem(event, itemId, itemTitle, onSuccessCallback) {
-  // Prevent the click from bubbling up and opening the Item Details window
+  /* Prevent the click from bubbling to the item card and opening details */
   event.stopPropagation();
 
   const trashSVG = `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`;
@@ -1018,12 +995,10 @@ async function promptDeleteItem(event, itemId, itemTitle, onSuccessCallback) {
       const token = localStorage.getItem("yfi_token");
       if (!token) return;
 
-      // Call the delete API endpoint
       const res = await deleteItem(token, itemId);
 
       if (res.data && res.data.success) {
         toastUI.show(res.data.message || "Item deleted successfully", "success");
-        // Refresh the user's item list and the home feed
         await loadMyItems();
         await loadHomeFeed();
         if (typeof onSuccessCallback === 'function') {
@@ -1045,13 +1020,11 @@ function updateHomeHeader(isLoggedIn, userName = "") {
   if (!actionContainer || !greetText || !nameText) return;
 
   if (isLoggedIn) {
-    // Logged In: Show small avatar, update greeting text
     const initial = userName.charAt(0).toUpperCase();
     actionContainer.innerHTML = `<button class="home-avatar-btn" onclick="redirectTo('profile')">${initial}</button>`;
     greetText.innerText = `Hi,`;
     nameText.innerText = userName;
   } else {
-    // Logged Out: Show login button, default greeting text
     actionContainer.innerHTML = `<button class="loginbtn" onclick="redirectTo('profile')">Login</button>`;
     greetText.innerText = `Welcome to,`;
     nameText.innerText = `YoFoundIt`;
@@ -1080,7 +1053,7 @@ function closeLogoutModal() {
 async function handleLogout() {
   closeLogoutModal();
 
-  // Attempt backend logout to destroy session securely
+  /* Invalidate the server-side session before clearing local credentials */
   const token = localStorage.getItem("yfi_token");
   if (token) {
     await logoutUser(token);
@@ -1098,27 +1071,27 @@ function showAlertModal(svgContent, title, message, actionText, onConfirm, isDes
   const modal = document.getElementById("alertModal");
   if (!modal) return;
 
-  // Set Content
+  /* Set modal content */
   const iconContainer = document.getElementById("alertModalIcon");
   if (iconContainer && svgContent) {
     iconContainer.innerHTML = svgContent;
   }
 
-  document.getElementById("alertModalTitle").innerText = title;
+  document.getElementById("alertModalTitle").innerText   = title;
   document.getElementById("alertModalMessage").innerText = message;
 
   const actionBtn = document.getElementById("alertModalActionBtn");
   actionBtn.innerText = actionText;
 
-  // Styling based on destructive action
+  /* Apply danger styling for destructive actions, neutral styling otherwise */
   if (isDestructive) {
     actionBtn.style.backgroundColor = "var(--yfiui-red)";
     actionBtn.style.color = "white";
     if (iconContainer) iconContainer.style.color = "var(--yfiui-red)";
   } else {
     actionBtn.style.backgroundColor = "var(--theme-color)";
-    actionBtn.style.color = "var(--theme-accent)";
-    if (iconContainer) iconContainer.style.color = "var(--yfiui-red)"; // Keep icon red for warnings
+    actionBtn.style.color           = "var(--theme-accent)";
+    if (iconContainer) iconContainer.style.color = "var(--yfiui-red)";
   }
 
   modal.classList.remove("closing");
@@ -1205,7 +1178,10 @@ async function handleAuthSubmit(event) {
   submitBtn.classList.remove("loading");
 }
 
-// ----- Reusable Animated Toast/Modal Class -----
+/* =============================================================
+ * Toast Modal
+ * Reusable animated toast for user feedback (success / error).
+ * ============================================================= */
 class ToastModal {
   constructor() {
     this.el = document.createElement('div');
@@ -1226,23 +1202,26 @@ class ToastModal {
 
     if (type === 'success') {
       this.el.classList.add('success');
-      this.iconLabel.innerHTML = '&#10003;'; // Checkmark
+      this.iconLabel.innerHTML = '&#10003;';
     } else {
       this.el.classList.remove('success');
-      this.iconLabel.innerHTML = '&#9888;'; // Warning sign
+      this.iconLabel.innerHTML = '&#9888;';
     }
 
     this.el.classList.add('show');
 
     this.timeout = setTimeout(() => {
       this.el.classList.remove('show');
-    }, 3000); // hide after 3 seconds
+    }, 3000);
   }
 }
 
 const toastUI = new ToastModal();
 
-// Handle Add Item Form Submission
+/* =============================================================
+ * Add Item Form
+ * Handles form validation, image preparation, and submission.
+ * ============================================================= */
 async function handleAddSubmit(event) {
   event.preventDefault();
   const token = localStorage.getItem("yfi_token");
@@ -1252,7 +1231,6 @@ async function handleAddSubmit(event) {
   }
 
   const form = event.target;
-  // Ensure hidden Type field is populated realistically
   if (!form.type.value) {
     toastUI.show("Please select LOST or FOUND", "error");
     return;
@@ -1265,7 +1243,6 @@ async function handleAddSubmit(event) {
 
   const formData = new FormData(form);
 
-  // Append managed files to payload
   selectedFiles.forEach((file) => {
     formData.append("images[]", file);
   });
@@ -1276,14 +1253,14 @@ async function handleAddSubmit(event) {
     toastUI.show("Item posted successfully!", "success");
     form.reset();
 
-    // Reset custom dropdown values
+    /* Reset the custom type dropdown back to its unselected state */
     const typeInput = document.getElementById("typeInput");
     if (typeInput) typeInput.value = "";
     typeInput.style.backgroundColor = "transparent";
     typeInput.style.color = "var(--theme-color)";
     typeInput.style.fontWeight = "normal";
 
-    // Reset image preview state
+    /* Clear image previews */
     const previewContainer = document.getElementById("imagePreviewContainer");
     if (previewContainer) {
       previewContainer.innerHTML = "";
@@ -1291,7 +1268,6 @@ async function handleAddSubmit(event) {
     }
     selectedFiles = [];
 
-    // Refresh Feed!
     await loadHomeFeed();
 
     setTimeout(() => {
@@ -1308,14 +1284,21 @@ async function handleAddSubmit(event) {
   submitBtn.disabled = false;
 }
 
-// ------ Multiple Image Preview Logic ------
-const uploadInput = document.getElementById("imageupload");
+/* =============================================================
+ * Image Preview & Compression
+ * Manages the selected-files list, resizes via Worker when
+ * available, and renders thumbnail previews before upload.
+ * ============================================================= */
+const uploadInput  = document.getElementById("imageupload");
 const captureInput = document.getElementById("imagecapture");
 const previewContainer = document.getElementById("imagePreviewContainer");
 
 let selectedFiles = [];
 
-// Worker setup
+/**
+ * Offloads image decoding/re-encoding to the resize Worker when
+ * OffscreenCanvas is available; falls back to main-thread canvas otherwise.
+ */
 const supportsOffscreen = typeof OffscreenCanvas !== 'undefined';
 const resizeWorker = supportsOffscreen ? new Worker('./js/resize.worker.js') : null;
 
@@ -1323,7 +1306,7 @@ function prepareImage(file, thresholdKB = 500, targetKB = 400) {
   if (file.size <= thresholdKB * 1024) return Promise.resolve(file);
 
   if (resizeWorker) {
-    // GPU + off-thread path
+    /* Off-thread path via Worker + OffscreenCanvas */
     return new Promise((resolve, reject) => {
       const msgChannel = new MessageChannel();
       msgChannel.port1.onmessage = (e) => {
@@ -1333,7 +1316,7 @@ function prepareImage(file, thresholdKB = 500, targetKB = 400) {
       resizeWorker.postMessage({ file, targetKB }, [msgChannel.port2]);
     });
   } else {
-    // Fallback — main thread canvas
+    /* Fallback: resize on the main thread using a regular canvas */
     return fallbackResize(file, targetKB);
   }
 }
@@ -1348,19 +1331,22 @@ async function fallbackResize(file, targetKB) {
   const MAX_PORTRAIT = 1080;
   const MAX_SQUARE = 1080;
 
-  if (width > height) { // Landscape
+  if (width > height) {
+    /* Landscape */
     if (width > MAX_LANDSCAPE) {
       height = Math.round((height * MAX_LANDSCAPE) / width);
-      width = MAX_LANDSCAPE;
+      width  = MAX_LANDSCAPE;
     }
-  } else if (height > width) { // Portrait
+  } else if (height > width) {
+    /* Portrait */
     if (height > MAX_PORTRAIT) {
-      width = Math.round((width * MAX_PORTRAIT) / height);
+      width  = Math.round((width * MAX_PORTRAIT) / height);
       height = MAX_PORTRAIT;
     }
-  } else { // Square
+  } else {
+    /* Square */
     if (width > MAX_SQUARE) {
-      width = MAX_SQUARE;
+      width  = MAX_SQUARE;
       height = MAX_SQUARE;
     }
   }
@@ -1434,24 +1420,29 @@ async function handleFileSelection(files) {
   }
 }
 
-if (uploadInput && captureInput) {
-  uploadInput.addEventListener("change", function () {
-    handleFileSelection(this.files);
-    this.value = ""; // Reset input after reading to allow same file re-upload if deleted
-  });
+  if (uploadInput && captureInput) {
+    uploadInput.addEventListener("change", function () {
+      handleFileSelection(this.files);
+      /* Reset the input so the same file can be re-selected after removal */
+      this.value = "";
+    });
 
-  captureInput.addEventListener("change", function () {
-    handleFileSelection(this.files);
-    this.value = "";
-  });
-}
+    captureInput.addEventListener("change", function () {
+      handleFileSelection(this.files);
+      this.value = "";
+    });
+  }
 
-// ------ Item Details Logic ------
+/* =============================================================
+ * Item Details
+ * Fetches and populates the item detail view. Handles the
+ * carousel, claim/delete buttons, and lock overlay.
+ * ============================================================= */
 function closeItemDetails() {
   if (window.history.length > 1) {
     history.back();
   } else {
-    // Fallback if no history exists somehow
+    /* Fallback: no history entry — manipulate the path stack directly */
     let path = JSON.parse(sessionStorage.getItem("pagepath")) || ["home"];
     if (path[path.length - 1] === "itemdetails") {
       path.pop();
@@ -1483,36 +1474,32 @@ async function handleClaimClick(itemId, isLost = false) {
   if (res.data && res.data.success) {
     toastUI.show(res.data.message || "Item claimed successfully", "success");
 
-    // Change button text and keep it disabled to show it's claimed
+    /* Keep the button disabled with a contextual label — do not restore to original state */
     claimBtn.innerHTML = isLost ? "Reported as Found" : "Already Claimed";
     claimBtn.className = 'contact-btn claim-btn claim-btn-taken';
-    claimBtn.disabled = true;
-    claimBtn.style.opacity = '';
-    // We intentionally don't restore originalHtml or disable=false here
+    claimBtn.disabled  = true;
+    claimBtn.style.opacity       = '';
+    claimBtn.style.pointerEvents = 'all';
+    claimBtn.onclick = null;
   } else {
     toastUI.show(res.data.message || "Failed to claim item", "error");
     claimBtn.innerHTML = originalHtml;
-    claimBtn.disabled = false;
+    claimBtn.disabled  = false;
   }
 }
 
 async function openItemDetails(itemId) {
-  // Show loading via toast perhaps
-  console.log("Fetching details for item:", itemId);
-
   const res = await fetchItemDetails(itemId);
 
   if (res.status === 200 && res.data && res.data.success && res.data.data) {
     const item = res.data.data;
 
-    // Determine tags
-    const isLost = item.item_type && item.item_type.toLowerCase() === "lost";
+    const isLost      = item.item_type && item.item_type.toLowerCase() === "lost";
     const tagColorClass = isLost ? "yfiui-red" : "yfiui-green";
-    const tagLabel = isLost ? "LOST" : "FOUND";
+    const tagLabel    = isLost ? "LOST" : "FOUND";
 
-    // Populate Hero text
     const detailsTag = document.getElementById('detailsTag');
-    detailsTag.className = `lftag ${tagColorClass}`;
+    detailsTag.className   = `lftag ${tagColorClass}`;
     detailsTag.textContent = tagLabel;
 
     document.getElementById('detailsTitle').textContent = item.title;
@@ -1520,7 +1507,7 @@ async function openItemDetails(itemId) {
     document.getElementById('detailsTime').textContent = `Posted ${item.uploaded_at}`;
     document.getElementById('detailsDescription').textContent = item.description;
 
-    // Contact Logic
+    /* Contact section heading — differs based on whether user owns the item */
     const contactLabel = document.getElementById('detailsContactLabel');
     if (contactLabel) {
       if (item.isAddedByUser) {
@@ -1533,11 +1520,11 @@ async function openItemDetails(itemId) {
       document.getElementById('detailsPosterName').textContent = item.posted_by || "User";
     }
 
-    const claimBtnWrapper = document.getElementById('claimBtnWrapper');
-    const claimBtn = document.getElementById('btnClaim');
-    const claimLockOverlay = document.getElementById('claimLockOverlay');
+    const claimBtnWrapper   = document.getElementById('claimBtnWrapper');
+    const claimBtn          = document.getElementById('btnClaim');
+    const claimLockOverlay  = document.getElementById('claimLockOverlay');
 
-    // Set button text and color based on ownership or item type
+    /* Button behaviour varies by ownership and item type */
     if (item.isAddedByUser) {
       claimBtn.innerHTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1601,15 +1588,15 @@ async function openItemDetails(itemId) {
     if (item.actionTaken && !item.isAddedByUser) {
       claimBtn.innerHTML = isLost ? "Reported as Found" : "Already Claimed";
       claimBtn.className = 'contact-btn claim-btn claim-btn-taken';
-      claimBtn.disabled = true;
-      claimBtn.style.opacity = '';
-      claimBtn.style.pointerEvents = 'all'; // Let it receive clicks but do nothing due to disabled attribute
+      claimBtn.disabled  = true;
+      claimBtn.style.opacity       = '';
+      claimBtn.style.pointerEvents = 'all'; /* Receives clicks but does nothing — button is disabled */
       claimBtn.onclick = null;
     }
 
-    // Carousel Logic
+    /* Populate image carousel */
     const carouselOpts = document.getElementById('detailsCarousel');
-    carouselOpts.innerHTML = ''; // Clear old images
+    carouselOpts.innerHTML = '';
 
     const viewerCarousel = document.getElementById('imageViewerCarousel');
     if (viewerCarousel) viewerCarousel.innerHTML = '';
@@ -1625,15 +1612,14 @@ async function openItemDetails(itemId) {
       setupCarouselIndicators('detailsCarousel', 'detailsIndicators');
       setupCarouselIndicators('imageViewerCarousel', 'viewerIndicators');
     } else {
-      carouselOpts.style.display = 'none'; // hide carousel if 0 images
+      carouselOpts.style.display = 'none';
       document.getElementById('detailsIndicators').style.display = 'none';
       if (document.getElementById('viewerIndicators')) document.getElementById('viewerIndicators').style.display = 'none';
     }
 
-    // Slide it in
     redirectTo("itemdetails");
   } else {
-    // Attempt fallback or show error
+    /* Item fetch failed — show the most descriptive error available */
     const msg = (res.data && res.data.message) ? res.data.message : "Failed to load item details.";
     if (typeof uiToast !== 'undefined') {
       uiToast.show(msg, "error");
@@ -1645,7 +1631,10 @@ async function openItemDetails(itemId) {
   }
 }
 
-// Carousel Indicator Logic
+/* =============================================================
+ * Carousel Indicators
+ * Builds and synchronises dot indicators for any scroll carousel.
+ * ============================================================= */
 function setupCarouselIndicators(carouselId, indicatorsId) {
   const carousel = document.getElementById(carouselId);
   const indicatorsContainer = document.getElementById(indicatorsId);
@@ -1669,7 +1658,7 @@ function setupCarouselIndicators(carouselId, indicatorsId) {
     indicatorsContainer.appendChild(dot);
   });
 
-  // Throttle or just simple assign
+  /* Update active dot based on the image closest to the carousel centre */
   carousel.onscroll = () => {
     let closestIndex = 0;
     let minDiff = Infinity;
@@ -1695,7 +1684,10 @@ function setupCarouselIndicators(carouselId, indicatorsId) {
   };
 }
 
-// Full Screen Image Viewer Logic
+/* =============================================================
+ * Full-Screen Image Viewer
+ * Opens the lightbox and scrolls to the tapped image.
+ * ============================================================= */
 function openImageViewer(index) {
   const modal = document.getElementById('imageViewerModal');
   const carousel = document.getElementById('imageViewerCarousel');
@@ -1705,7 +1697,10 @@ function openImageViewer(index) {
   modal.classList.remove('closing');
   modal.classList.add('active');
 
-  // Delay scroll slightly to ensure elements are rendered and visible
+  /*
+   * Small delay ensures the modal is visible before scrollIntoView fires,
+   * avoiding a no-op when elements have not yet been painted.
+   */
   setTimeout(() => {
     const images = carousel.querySelectorAll('.viewer-fullscreen-img');
     if (images[index]) {
@@ -1725,9 +1720,13 @@ function closeImageViewer() {
   }, 300);
 }
 
-// ------ Notification Logic ------
-let currentNotificationsRaw = "[]";
-let unreadNotificationIdsToRead = [];
+/* =============================================================
+ * Notifications
+ * Renders the notification inbox and manages the unread → read
+ * transition when the panel is closed.
+ * ============================================================= */
+let currentNotificationsRaw      = "[]";
+let unreadNotificationIdsToRead  = [];
 
 window.addEventListener('pagehide', () => {
   handleNotificationPanelClose();
@@ -1738,11 +1737,11 @@ function handleNotificationPanelClose() {
   const token = localStorage.getItem("yfi_token");
   if (token) {
     unreadNotificationIdsToRead.forEach(id => {
-      readNotification(token, id); // Uses keepalive: true implicitly sending in the background
+      readNotification(token, id);
     });
   }
 
-  // Update UI immediately for subsequent re-opens
+  /* Update the UI immediately so a re-open shows items as already-read */
   const unreadItems = document.querySelectorAll('#notificationContainer .notification-item.unread');
   unreadItems.forEach(el => {
     el.classList.remove('unread');
@@ -1804,7 +1803,6 @@ function renderNotifications(notificationsPayload) {
     } else if (n.type === "found" && n.user_name && n.item_title) {
       contentReplaced = `<span class="highlight-user">${n.user_name}</span> found your missing item <strong>${n.item_title}</strong>. Please contact them to retrieve it.`;
     } else if (n.user_name) {
-      // Replace <user_name> or any occurrences of n.user_name
       contentReplaced = contentReplaced.replace(/<user_name>/g, `<span class="highlight-user">${n.user_name}</span>`);
     }
 
@@ -1818,11 +1816,11 @@ function renderNotifications(notificationsPayload) {
       `;
     }
 
-    const imageHtml = n.first_image_url 
-      ? `<img src="${HOST}/${n.first_image_url}" class="notification-item-img" alt="Item Image">` 
+    const imageHtml = n.first_image_url
+      ? `<img src="${HOST}/${n.first_image_url}" class="notification-item-img" alt="Item Image">`
       : `<div class="notification-item-img placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></div>`;
-    
-    // Only show item layout context if item_id exists
+
+    /* Only render the image column when the notification is linked to a specific item */
     const hasItemContext = !!n.item_id;
 
     html = `<div class="notification-item ${isUnread ? 'unread' : 'read'} ${hasItemContext ? 'has-item' : ''}" data-id="${n.notification_id}" ${hasItemContext ? `onclick="openItemDetails('${n.item_id}')"` : ''}>
