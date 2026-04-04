@@ -167,7 +167,7 @@
                     <div class="collapedfield">
                         <input type="text" name="name" autocomplete="name" class="uiinputbox" placeholder="Full Name">
                     </div>
-                    <input type="email" class="uiinputbox" autocomplete="email" name="email" placeholder="Email">
+                    <input type="email" id="authEmail" class="uiinputbox" autocomplete="username" name="email" placeholder="Email">
                     <div class="collapedfield">
                         <div style="display: flex; align-items: center;">
                             <input type="tel" name="country_code" class="uiinputbox" autocomplete="tel-country-code"
@@ -176,10 +176,10 @@
                                 maxlength="10" placeholder="Whatsapp Number">
                         </div>
                     </div>
-                    <input type="password" class="uiinputbox" name="password" placeholder="Password">
+                    <input type="password" id="authPassword" class="uiinputbox" name="password" placeholder="Password" autocomplete="current-password">
                     <div class="collapedfield">
-                        <input type="password" name="confirm_password" class="uiinputbox"
-                            placeholder="Confirm Password">
+                        <input type="password" id="authConfirmPassword" name="confirm_password" class="uiinputbox"
+                            placeholder="Confirm Password" autocomplete="new-password">
                     </div>
                     <button type="submit" class="accbtn" id="authSubmitBtn">Login</button>
                     <span class="accbtmtxt">Don't have an account?

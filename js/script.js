@@ -533,12 +533,7 @@ function closewindow(windowname) {
 //     event.preventDefault();
 //     return false;
 // }
-document.addEventListener("keydown", function (event) {
-  if (event.keyCode === 9 || event.key === "Tab") {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-});
+
 function signupform() {
   formtype = "signup";
   let expans = document.querySelectorAll(".collapedfield");
