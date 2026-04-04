@@ -102,10 +102,161 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadCategories();
   await loadHomeFeed();
 
+  // Start a refresh when user returns to home (handled in onpopstate)
+
   setTimeout(() => {
     Pageloaded = true;
   }, 500);
 });
+
+// ------ Search Logic ------
+(function initSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchResult = document.querySelector('.search-result');
+  if (!searchInput || !searchBtn || !searchResult) return;
+
+  let debounceTimer = null;
+
+  function highlightMatch(text, query) {
+    if (!query) return text;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, 'gi');
+    return text.replace(regex, `<mark class="search-highlight">$1</mark>`);
+  }
+
+  function renderSearchResults(items, query) {
+    if (!items || items.length === 0) {
+      searchResult.innerHTML = `<div class="search-empty">No results found for "<strong>${query}</strong>"</div>`;
+      return;
+    }
+
+    searchResult.innerHTML = items.map(item => {
+      const isLost = item.item_type && item.item_type.toLowerCase() === 'lost';
+      const tagColorClass = isLost ? 'yfiui-red' : 'yfiui-green';
+      const tagLabel = isLost ? 'LOST' : 'FOUND';
+      const highlightedTitle = highlightMatch(item.title || '', query);
+      const highlightedDesc = highlightMatch(
+        (item.description || '').length > 80
+          ? item.description.substring(0, 80).trim() + '...'
+          : (item.description || ''),
+        query
+      );
+
+      return `
+        <div class="search-result-item" onclick="openItemDetails(${item.item_id})">
+          ${item.image_url
+            ? `<div class="search-result-img-wrapper"><img src="${HOST}/${item.image_url}" alt="${item.title}" class="search-result-img"></div>`
+            : `<div class="search-result-img-wrapper placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>`
+          }
+          <div class="search-result-info">
+            <div class="search-result-hero">
+              <span class="lftag ${tagColorClass}">${tagLabel}</span>
+              <h3 class="search-result-title">${highlightedTitle}</h3>
+            </div>
+            <p class="search-result-desc">${highlightedDesc}</p>
+            <span class="search-result-time">${item.uploaded_at || ''}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function doSearch(query) {
+    const q = query.trim();
+    if (q.length < 3) {
+      searchResult.innerHTML = `<div class="search-empty">Type at least 3 characters to search.</div>`;
+      return;
+    }
+
+    searchResult.innerHTML = `<div class="search-empty">Searching...</div>`;
+
+    const res = await fetchSearchResults(q);
+    const items = res.data && Array.isArray(res.data) ? res.data
+      : (res.data && Array.isArray(res.data.data) ? res.data.data : []);
+    renderSearchResults(items, q);
+  }
+
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const q = searchInput.value.trim();
+    if (q.length < 3) {
+      searchResult.innerHTML = '';
+      return;
+    }
+    debounceTimer = setTimeout(() => doSearch(q), 250);
+  });
+
+  searchBtn.addEventListener('click', () => {
+    clearTimeout(debounceTimer);
+    doSearch(searchInput.value);
+  });
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      clearTimeout(debounceTimer);
+      doSearch(searchInput.value);
+    }
+  });
+})();
+
+// ------ Background Refresh on Return to Home ------
+let pollIntervalId = null;
+// Track the latest known item_id from the feed to detect new arrivals
+let latestKnownItemId = null;
+
+async function pollForUpdates() {
+  const token = localStorage.getItem("yfi_token");
+  if (!token) return;
+
+  try {
+    const res = await fetchLatestItems(token);
+    if (!res.data || !res.data.success) return;
+
+    // --- Update notifications if changed ---
+    if (res.data.notifications) {
+      renderNotifications(res.data.notifications);
+    }
+
+    // --- Prepend new feed items silently ---
+    if (res.data.data && res.data.data.length > 0) {
+      const incomingItems = res.data.data;
+      const newestIncoming = incomingItems[0].item_id;
+
+      // On first poll, just record the baseline
+      if (latestKnownItemId === null) {
+        latestKnownItemId = newestIncoming;
+        return;
+      }
+
+      // Find items newer than what we last saw
+      const newItems = incomingItems.filter(item => item.item_id > latestKnownItemId);
+      if (newItems.length === 0) return;
+
+      // Prepend new cards to the top of the feed
+      const feedContainer = document.getElementById("homeFeedContainer");
+      if (!feedContainer) return;
+
+      // Insert newest first (they arrive newest-first already)
+      newItems.reverse().forEach(item => {
+        feedContainer.insertAdjacentHTML('afterbegin', renderItemCard(item));
+      });
+
+      // Attach ripple to new cards
+      const newCards = feedContainer.querySelectorAll(".lfcontainer:not([data-ripple])");
+      newCards.forEach(card => {
+        card.setAttribute("data-ripple", "true");
+        card.addEventListener("click", function (event) {
+          rippleEffect(this, event);
+        });
+      });
+
+      latestKnownItemId = newestIncoming;
+    }
+  } catch (err) {
+    console.error("Poll error:", err);
+  }
+}
 
 // ------ Home Feed Logic ------
 
@@ -114,21 +265,7 @@ let lastItemId = null;
 let isLoadingMore = false;
 let hasMoreItems = true;
 
-function timeSince(dateString) {
-  const date = new Date(dateString.replace(' ', 'T'));
-  const seconds = Math.floor((new Date() - date) / 1000);
-  let interval = seconds / 31536000;
-  if (interval > 1) return Math.floor(interval) + "y ago";
-  interval = seconds / 2592000;
-  if (interval > 1) return Math.floor(interval) + "mo ago";
-  interval = seconds / 86400;
-  if (interval > 1) return Math.floor(interval) + "d ago";
-  interval = seconds / 3600;
-  if (interval > 1) return Math.floor(interval) + "h ago";
-  interval = seconds / 60;
-  if (interval > 1) return Math.floor(interval) + "m ago";
-  return Math.floor(seconds) + "s ago";
-}
+
 
 function renderItemCard(item) {
   const isLost = item.item_type.toLowerCase() === "lost";
@@ -141,19 +278,19 @@ function renderItemCard(item) {
 
   return `
     <div class="lfcontainer" onclick="openItemDetails(${item.item_id})">
+      ${item.image_url ? `<div class="lfimage-wrapper"><img src="${HOST}/${item.image_url}" alt="${item.title}" class="lfimage"></div>` : ''}
       <div class="lfinfo">
         <div class="lfcontent">
           <div class="lfhero">
-            <div class="lftag ${tagColorClass}">${tagLabel}</div>
             <h1 class="lfhead">${item.title}</h1>
+            <div class="lftag ${tagColorClass}">${tagLabel}</div>
           </div>
           <div class="lftext">
             <p class="lftextp">${shortDesc}</p>
           </div>
         </div>
-        <p class="posttime">${timeSince(item.uploaded_at)}</p>
+        <p class="posttime">${item.uploaded_at}</p>
       </div>
-      ${item.image_url ? `<img src="${HOST}/${item.image_url}" alt="${item.title}" class="lfimage">` : ''}
     </div>
   `;
 }
@@ -245,6 +382,9 @@ async function loadHomeFeed() {
     items.forEach(item => {
       feedContainer.insertAdjacentHTML('beforeend', renderItemCard(item));
     });
+
+    // Record the newest item_id for polling diff detection
+    latestKnownItemId = items[0].item_id;
 
     // Track the oldest item_id from this batch for pagination
     lastItemId = items[items.length - 1].item_id;
@@ -474,6 +614,7 @@ window.onpopstate = function (event) {
     path.pop();
     sessionStorage.setItem("pagepath", JSON.stringify(path));
     document.querySelector(".searchinput").value = "";
+    document.querySelector(".search-result").innerHTML = "";
     history.replaceState(null, "", location.href);
     closewindow("search");
   } else if (path[path.length - 1] == "add") {
@@ -514,6 +655,11 @@ window.onpopstate = function (event) {
     setTimeout(() => {
       history.pushState({ window: "cleared" }, "", "");
     }, 0);
+
+    // 3. Refresh feed + notifications when returning home (only if logged in)
+    if (localStorage.getItem("yfi_token")) {
+      pollForUpdates();
+    }
   }
 };
 let formtype = "login";
@@ -828,7 +974,7 @@ async function loadMyItems() {
             <h3 class="myitem-title">${item.title}</h3>
             <div class="myitem-meta">
               <span class="myitem-tag ${tagClass}">${tagLabel}</span>
-              <span>${timeSince(item.uploaded_at || item.created_at)}</span>
+              <span>${item.uploaded_at || item.created_at}</span>
             </div>
           </div>
           <button class="myitem-delete-btn" onclick="promptDeleteItem(event, ${item.item_id}, '${item.title.replace(/'/g, "\\'")}')">
@@ -1371,7 +1517,7 @@ async function openItemDetails(itemId) {
 
     document.getElementById('detailsTitle').textContent = item.title;
     document.getElementById('detailsCategory').textContent = `Category: ${item.category}`;
-    document.getElementById('detailsTime').textContent = `Posted ${timeSince(item.uploaded_at)}`;
+    document.getElementById('detailsTime').textContent = `Posted ${item.uploaded_at}`;
     document.getElementById('detailsDescription').textContent = item.description;
 
     // Contact Logic
@@ -1653,7 +1799,11 @@ function renderNotifications(notificationsPayload) {
   notifications.forEach(n => {
     const isUnread = !n.is_read;
     let contentReplaced = n.content || "";
-    if (n.user_name) {
+    if (n.type === "claimed" && n.user_name && n.item_title) {
+      contentReplaced = `<span class="highlight-user">${n.user_name}</span> claimed your item <strong>${n.item_title}</strong>. Please contact them to coordinate.`;
+    } else if (n.type === "found" && n.user_name && n.item_title) {
+      contentReplaced = `<span class="highlight-user">${n.user_name}</span> found your missing item <strong>${n.item_title}</strong>. Please contact them to retrieve it.`;
+    } else if (n.user_name) {
       // Replace <user_name> or any occurrences of n.user_name
       contentReplaced = contentReplaced.replace(/<user_name>/g, `<span class="highlight-user">${n.user_name}</span>`);
     }
@@ -1662,17 +1812,25 @@ function renderNotifications(notificationsPayload) {
     if (n.type === "claimed" || n.type === "found") {
       actionsHtml = `
         <div class="notification-actions">
-          <a href="https://wa.me/${n.whatsapp_number}" target="_blank" class="contact-btn claim-btn claim-btn-success notif-action-btn">WhatsApp</a>
-          <a href="mailto:${n.email}" target="_blank" class="contact-btn claim-btn claim-btn-primary notif-action-btn">Email</a>
+          <a href="https://wa.me/${n.whatsapp_number}" target="_blank" onclick="event.stopPropagation()" class="contact-btn claim-btn claim-btn-success notif-action-btn">WhatsApp</a>
+          <a href="mailto:${n.email}" target="_blank" onclick="event.stopPropagation()" class="contact-btn claim-btn claim-btn-primary notif-action-btn">Email</a>
         </div>
       `;
     }
 
-    html = `<div class="notification-item ${isUnread ? 'unread' : 'read'}" data-id="${n.notification_id}">
+    const imageHtml = n.first_image_url 
+      ? `<img src="${HOST}/${n.first_image_url}" class="notification-item-img" alt="Item Image">` 
+      : `<div class="notification-item-img placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></div>`;
+    
+    // Only show item layout context if item_id exists
+    const hasItemContext = !!n.item_id;
+
+    html = `<div class="notification-item ${isUnread ? 'unread' : 'read'} ${hasItemContext ? 'has-item' : ''}" data-id="${n.notification_id}" ${hasItemContext ? `onclick="openItemDetails('${n.item_id}')"` : ''}>
+        ${hasItemContext ? `<div class="notification-image-container">${imageHtml}</div>` : ''}
         <div class="notification-content-wrapper">
           <div class="notification-header">
             <h3 class="notification-title">${n.title}</h3>
-            <span class="notification-time">${timeSince(n.created_at)}</span>
+            <span class="notification-time">${n.created_at}</span>
           </div>
           <p class="notification-text">${contentReplaced}</p>
           ${actionsHtml}

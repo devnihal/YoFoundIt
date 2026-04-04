@@ -18,7 +18,8 @@ const endpoints = {
     deleteItem: `${HOST}/items/delete.php`,
     getMoreItems: `${HOST}/items/get_more.php`,
     claimItem: `${HOST}/items/claim.php`,
-    readNotification: `${HOST}/notifications/read.php`
+    readNotification: `${HOST}/notifications/read.php`,
+    searchItems: `${HOST}/items/search.php`
 };
 
 /**
@@ -307,6 +308,25 @@ async function readNotification(token, notificationId) {
         return { status: response.status, data: result };
     } catch (error) {
         console.error("Read notification error:", error);
+        return { status: 500, data: { success: false, message: "Network or Server Error" } };
+    }
+}
+/**
+ * Search Items
+ * GET /items/search.php?q={query}
+ */
+async function fetchSearchResults(query, token = null) {
+    try {
+        const t = token || (typeof localStorage !== 'undefined' ? localStorage.getItem('yfi_token') : null);
+        const options = { method: 'GET' };
+        if (t) {
+            options.headers = { 'Authorization': `Bearer ${t}` };
+        }
+        const response = await fetch(`${endpoints.searchItems}?q=${encodeURIComponent(query)}`, options);
+        const result = await response.json();
+        return { status: response.status, data: result };
+    } catch (error) {
+        console.error("Search error:", error);
         return { status: 500, data: { success: false, message: "Network or Server Error" } };
     }
 }
