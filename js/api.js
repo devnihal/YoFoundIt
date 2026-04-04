@@ -2,7 +2,7 @@ const FRONTEND_HOST = window.location.hostname;
 const IS_DEV = FRONTEND_HOST === 'localhost' || FRONTEND_HOST === '127.0.0.1';
 
 // When transitioning to production, the production backend URL will be used.
-const HOST = IS_DEV ? 'http://localhost/YoFoundIt' : 'https://yofoundit-production.up.railway.app/';
+const HOST = IS_DEV ? 'http://localhost/YoFoundIt' : 'https://yofoundit-production.up.railway.app';
 
 const endpoints = {
     login: `${HOST}/authentication/login.php`,
