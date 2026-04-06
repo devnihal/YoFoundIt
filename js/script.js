@@ -1823,7 +1823,7 @@ function renderNotifications(notificationsPayload) {
     /* Only render the image column when the notification is linked to a specific item */
     const hasItemContext = !!n.item_id;
 
-    html = `<div class="notification-item ${isUnread ? 'unread' : 'read'} ${hasItemContext ? 'has-item' : ''}" data-id="${n.notification_id}" ${hasItemContext ? `onclick="openItemDetails('${n.item_id}')"` : ''}>
+    html += `<div class="notification-item ${isUnread ? 'unread' : 'read'} ${hasItemContext ? 'has-item' : ''}" data-id="${n.notification_id}" ${hasItemContext ? `onclick="openItemDetails('${n.item_id}')"` : ''}>
         ${hasItemContext ? `<div class="notification-image-container">${imageHtml}</div>` : ''}
         <div class="notification-content-wrapper">
           <div class="notification-header">
